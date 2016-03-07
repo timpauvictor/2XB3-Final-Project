@@ -6,8 +6,7 @@ module.exports = mongoose.model('Point', {
 	name: {type: String, default: ' '},
 	description: {type: String, default: ' '},
 	geometry: {
-		lat: {type: Number, default: 0}
+		lat: {type: Number, default: 0},
 		lng: {type: Number, default: 0}
-	}
-	//define what the services are when we find that out
+	}//define what the services are when we find that out
 });

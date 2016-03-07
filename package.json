@@ -1,0 +1,10 @@
+{
+	"name": "xb3-final",
+	"main": "server.js",
+	"dependencies": {
+		"express": "~4.5.1", //
+		"mongoose": "~3.8.0", //mongoDB
+		"body-parser": "~1.4.2", //json parsing
+		"method-override": "~2.0.2" //ovrriding methods
+	}
+}

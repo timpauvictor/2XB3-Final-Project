@@ -8,5 +8,7 @@ module.exports = mongoose.model('Point', {
 	geometry: {
 		lat: {type: Number, default: 0},
 		lng: {type: Number, default: 0}
-	}//define what the services are when we find that out
+	//defining anything else happens here, make sure you add a comma
+	//to the previous line
+	}
 });

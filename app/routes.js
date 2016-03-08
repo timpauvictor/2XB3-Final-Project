@@ -21,7 +21,7 @@ module.exports = function(app) {
 			console.log("New Point Made");
 			res.send("Success");
 		})
-	})
+	});
 
 	//frontend routes===========================================
 	app.get('*', function(req, res) {

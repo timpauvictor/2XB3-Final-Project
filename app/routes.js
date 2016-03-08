@@ -5,11 +5,11 @@ module.exports = function(app) {
 	//server routes to handle api calls
 	//authentication routes=====================================
 	app.get('/api/points', function(req, res) {
-		Point.find(function(err, gotPoints) {
+		Point.find(function(err, resPoints) {
 			if (err) {
 				res.send(err);
 			}
-			res.json(gotPoints);
+			res.json(resPoints);
 		});
 	});
 

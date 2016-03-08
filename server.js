@@ -1,19 +1,18 @@
 //server.js 
 //modules =======================================================
-var express = require('express');
-var app = express();
-var bodyParser = require('body-parser');
-var methodOverride = require('method-override');
-var mongoose = require('mongoose');
+var express = require('express'); //require express to use app. functions
+var app = express(); //instantiate app
+var bodyParser = require('body-parser'); //let's us parse body requests
+var methodOverride = require('method-override'); //let's us override methods
+var mongoose = require('mongoose'); //mongoDB wrapper
 
 //config ==============================================
 
-var db = require('./config/db.js');
+var db = require('./config/db.js'); //database config file
 
-var port = process.env.PORT || 8080;
+var port = process.env.PORT || 8080; //defining our port
 
-//connect to mongo later
-mongoose.connect("mongodb://default:default@ds023398.mlab.com:23398/xb3-final-db");
+mongoose.connect("mongodb://default:default@ds023398.mlab.com:23398/xb3-final-db"); //connecting to mongo with my default user
 
 //get all data of the body (post) parameters
 //parsing application/json
@@ -31,9 +30,9 @@ app.use(methodOverride('X-HTTP-Method-Override'));
 // set the static files location /public/img will be /img for users
 app.use(express.static(__dirname + '/public')); 
 
-require('./app/routes')(app); // configure our routes
+require('./app/routes')(app); // location of our routes definition
 
-app.listen(port);
+app.listen(port); //start listening
 
 console.log("Listening on port: " + port);
 

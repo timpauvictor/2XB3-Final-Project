@@ -4,6 +4,7 @@ var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
 var methodOverride = require('method-override');
+var mongoose = require('mongoose');
 
 //config ==============================================
 
@@ -12,7 +13,7 @@ var db = require('./config/db.js');
 var port = process.env.PORT || 8080;
 
 //connect to mongo later
-// mongoose.connect(db.url);
+mongoose.connect("mongodb://default:default@ds023398.mlab.com:23398/xb3-final-db");
 
 //get all data of the body (post) parameters
 //parsing application/json

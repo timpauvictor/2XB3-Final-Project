@@ -10,11 +10,9 @@
 
 import shlex #if we import this, it'll split on whitespace 
 #while keeping quotes intact (which is exactly what we need)
-def getLines(fileName): #this function simply returns 
-#different lines of the file
+def getLines(fileName): #this function simply makes an array of all the lines in the file
 	with open(fileName) as openedFile: #open our file 
-		fileContent = openedFile.readlines() #file content 
-		#is all of the lines in the file
+		fileContent = openedFile.readlines() #file content is all of the lines in the file
 	return fileContent
 
 def splitLines(ourList): #this function split up the 

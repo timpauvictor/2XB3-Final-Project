@@ -14,7 +14,6 @@ module.exports = function(app) {
 	});
 
 	app.post('/api/addPoint', function(req, res) {
-		console.log(req.body);
 		var newPoint = Point(req.body);
 		newPoint.save(function(err) {
 			if (err) throw (err);

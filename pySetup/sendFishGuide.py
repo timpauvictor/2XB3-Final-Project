@@ -33,15 +33,22 @@ def splitLines(ourList): #this function split up the
 	return ourList
 
 def fixLatLng(ourList): #our data set doesn't included decimal points in the latitude and longitude strings, so we gotta fix that
+	#so, geography lesson time
+	#since all of our data is located in the norhern hemisphere than we know that all of our latitudes will be positive therefore the
+	#range is 0 to 90
+	#since all of our data is also located in Canada (eastern hemisphere) than all of our longitudes will be negative
+	#also, since we're in canada we only have to worry about longitudes from 0-99 and always negative
 	for i in range(len(ourList)):
 		ourList[i][3] = ourList[i][3][:2] + "." + ourList[i][3][2:]
-		ourList[i][4] = ourList[i][4][:2] + "." + ourList[i][4][2:]
+		ourList[i][4] = "-" + ourList[i][4][:2] + "." + ourList[i][4][2:]
 		print(ourList[i][3] + "," + ourList[i][4])
 	return ourList 
 
 def printItems(ourList): #print all items in a list useful for debugging
 	for item in ourList:
 		print(item)
+
+
 
 fileContent = getLines('FishGuide.txt')
 fileContent = splitLines(fileContent)

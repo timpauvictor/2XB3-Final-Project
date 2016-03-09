@@ -38,11 +38,11 @@ def fixLatLng(ourList): #our data set doesn't included decimal points in the lat
 	#range is 0 to 90
 	#since all of our data is also located in Canada (eastern hemisphere) than all of our longitudes will be negative
 	#also, since we're in canada we only have to worry about longitudes from 0-99 and always negative
-	for i in range(len(ourList)):
-		ourList[i][3] = ourList[i][3][:2] + "." + ourList[i][3][2:]
-		ourList[i][4] = "-" + ourList[i][4][:2] + "." + ourList[i][4][2:]
-		print(ourList[i][3] + "," + ourList[i][4])
-	return ourList 
+	for i in range(len(ourList)): #parse through the given list
+		ourList[i][3] = ourList[i][3][:2] + "." + ourList[i][3][2:] #add a decimal in between the second and third elements of latitude
+		ourList[i][4] = "-" + ourList[i][4][:2] + "." + ourList[i][4][2:] #add a negative at the beginning and a decimal in between the third and last elements
+		# print(ourList[i][3] + "," + ourList[i][4]) #can be commented out to see the changes
+	return ourList #return the list
 
 def printItems(ourList): #print all items in a list useful for debugging
 	for item in ourList:

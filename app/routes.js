@@ -31,15 +31,18 @@ module.exports = function(app) {
 			}
 
 			var counter = 0;
+			var points = [];
 			// console.log(resPoints.length)
 			for (var i = 0; i < resPoints.length; i++) {
 				if (resPoints[i]["specName_ENG"] === "Bass") {
 					counter++
+					points.push(resPoints[i]);
 				}
 			}
 			console.log(counter);
 			res.send({
-				numFound: counter
+				numFound: counter,
+				points: points
 			});
 		})
 	})

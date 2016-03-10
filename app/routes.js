@@ -1,4 +1,4 @@
-var Point = require('./models/point');
+var Point = require('./models/fishguidepoint.js');
 
 module.exports = function(app) {
 

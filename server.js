@@ -1,10 +1,10 @@
 //server.js 
 //modules =======================================================
-var express = require('express'); //require express to use app. functions
-var app = express(); //instantiate app
-var bodyParser = require('body-parser'); //let's us parse body requests
-var methodOverride = require('method-override'); //let's us override methods
-var mongoose = require('mongoose'); //mongoDB wrapper
+var express = require('express'); 				//require express to use app. functions
+var app = express(); 							//instantiate app
+var bodyParser = require('body-parser'); 		//let's us parse body requests
+var methodOverride = require('method-override');//let's us override methods
+var mongoose = require('mongoose'); 			//mongoDB wrapper
 
 //config ==============================================
 

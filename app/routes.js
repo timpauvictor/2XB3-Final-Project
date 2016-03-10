@@ -13,6 +13,8 @@ module.exports = function(app) {
 		});
 	});
 
+	// app.get('/api/waterpoints')
+
 	app.post('/api/addPoint', function(req, res) {
 		var newPoint = Point(req.body);
 		newPoint.save(function(err) {
@@ -21,6 +23,26 @@ module.exports = function(app) {
 			res.send("Success");
 		})
 	});
+
+	app.get('/api/findBass', function(req, res) {
+		Point.find(function(err, resPoints) {
+			if (err) {
+				res.send(err);
+			}
+
+			var counter = 0;
+			// console.log(resPoints.length)
+			for (var i = 0; i < resPoints.length; i++) {
+				if (resPoints[i]["specName_ENG"] === "Bass") {
+					counter++
+				}
+			}
+			console.log(counter);
+			res.send({
+				numFound: counter
+			});
+		})
+	})
 
 	//frontend routes===========================================
 	app.get('*', function(req, res) {

@@ -24,28 +24,28 @@ module.exports = function(app) {
 		})
 	});
 
-	app.get('/api/findBass', function(req, res) {
-		Point.find(function(err, resPoints) {
-			if (err) {
-				res.send(err);
-			}
+	// app.get('/api/findBass', function(req, res) {
+	// 	Point.find(function(err, resPoints) {
+	// 		if (err) {
+	// 			res.send(err);
+	// 		}
 
-			var counter = 0;
-			var points = [];
-			// console.log(resPoints.length)
-			for (var i = 0; i < resPoints.length; i++) {
-				if (resPoints[i]["specName_ENG"] === "Bass") {
-					counter++
-					points.push(resPoints[i]);
-				}
-			}
-			console.log(counter);
-			res.send({
-				numFound: counter,
-				points: points
-			});
-		})
-	})
+	// 		var counter = 0;
+	// 		var points = [];
+	// 		// console.log(resPoints.length)
+	// 		for (var i = 0; i < resPoints.length; i++) {
+	// 			if (resPoints[i]["specName_ENG"] === "Bass") {
+	// 				counter++
+	// 				points.push(resPoints[i]);
+	// 			}
+	// 		}
+	// 		console.log(counter);
+	// 		res.send({
+	// 			numFound: counter,
+	// 			points: points
+	// 		});
+	// 	})
+	// })
 
 	//frontend routes===========================================
 	app.get('*', function(req, res) {

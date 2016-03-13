@@ -8,7 +8,7 @@ module.exports = mongoose.model('fishGuidePoint', {
 	geometry: {
 		lat: {type: Number, default: 0},
 		lng: {type: Number, default: 0},
-	}
+	},
 	species: [{
 		code: {type: Number, default: 0},
 		name: {type: String, default: ' '},
@@ -21,7 +21,7 @@ module.exports = mongoose.model('fishGuidePoint', {
 			popTypeID: {type: Number, default: 0},
 			popTypeDESC: {type: String, default: 0}
 		}]
-	}]
+	}],
 	locDESC: {type: String, default: ' '}
 	//defining anything else happens here, make sure you add a comma
 	//to the previous line

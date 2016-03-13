@@ -8,5 +8,8 @@ function loadMap() {
     console.log('topographic layer added');
 }
 
+function getPoints() {
+	
+}
 
 loadMap();

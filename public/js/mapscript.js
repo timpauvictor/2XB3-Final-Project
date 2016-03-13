@@ -1,5 +1,7 @@
-__startingCoords = [0, 0]
-__zoomLevel = 4;
+var __startingCoords = [0, 0]
+var __zoomLevel = 4;
+var __map;
+
 
 function loadMap() {
     __map = L.map("map").setView(__startingCoords, __zoomLevel);

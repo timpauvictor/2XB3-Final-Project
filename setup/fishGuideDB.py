@@ -51,6 +51,7 @@ def printItems(ourList): #print all items in a list useful for debugging
 fileContent = getLines('./data/FishGuide.txt')
 fileContent = splitLines(fileContent)
 fileContent = fixLatLng(fileContent)
+printItems(fileContent)
 
 
 

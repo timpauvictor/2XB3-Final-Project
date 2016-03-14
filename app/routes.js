@@ -1,51 +1,30 @@
-var Point = require('./models/fishguidepoint.js');
+var fishPoint = require('./models/fishguidepoint.js');
 
 module.exports = function(app) {
 
 	//server routes to handle api calls
 	//authentication routes=====================================
-	app.get('/api/points', function(req, res) {
-		Point.find(function(err, resPoints) {
+	app.get('/api/fishPoints', function(req, res) {
+		console.log('Received request for all fishPoints');
+		fishPoint.find(function(err, resPoint) {
 			if (err) {
 				res.send(err);
 			}
-			res.json(resPoints);
+			res.json(resPoint);
 		});
+		console.log('Request fulfilled');
 	});
 
-	// app.get('/api/waterpoints')
-
-	app.post('/api/addPoint', function(req, res) {
-		var newPoint = Point(req.body);
-		newPoint.save(function(err) {
+	app.post('/api/fishPoints', function(req, res) {
+		console.log('Received request to add a fishPoint');
+		var newfishPoint = fishPoint(req.body);
+		newfishPoint.save(function(err) {
 			if (err) throw (err);
-			console.log("New Point Made");
+			console.log("New fishPoint made");
 			res.send("Success");
 		})
+		console.log('Request fulfilled');
 	});
-
-	// app.get('/api/findBass', function(req, res) {
-	// 	Point.find(function(err, resPoints) {
-	// 		if (err) {
-	// 			res.send(err);
-	// 		}
-
-	// 		var counter = 0;
-	// 		var points = [];
-	// 		// console.log(resPoints.length)
-	// 		for (var i = 0; i < resPoints.length; i++) {
-	// 			if (resPoints[i]["specName_ENG"] === "Bass") {
-	// 				counter++
-	// 				points.push(resPoints[i]);
-	// 			}
-	// 		}
-	// 		console.log(counter);
-	// 		res.send({
-	// 			numFound: counter,
-	// 			points: points
-	// 		});
-	// 	})
-	// })
 
 	//frontend routes===========================================
 	app.get('*', function(req, res) {

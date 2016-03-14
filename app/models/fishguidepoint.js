@@ -24,5 +24,5 @@ module.exports = mongoose.model('fishGuidePoint', {
 	}],
 	locDESC: {type: String, default: ' '}
 	//defining anything else happens here, make sure you add a comma
-	//to the previous line
+	//to the previous line if you're more attributes
 });

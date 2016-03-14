@@ -11,7 +11,7 @@ function loadMap() {
     __map.invalidateSize();
 }
 
-function getPoints() {
+function getFishPoints() {
 	console.log("Attempting to get all points");
 	var jQueryPromise = $.get('http://localhost:8080/api/fishPoints', {
 		dataType: "jsonp"
@@ -27,15 +27,30 @@ function plotPoints(points) {
 	for (var i = 0; i < points.length; i++) {
 		console.log(points[i].geometry.lat, points[i].geometry.lng);
 		var marker = L.marker([points[i].geometry.lat, points[i].geometry.lng]).addTo(__map);
-		popupString = makeString(points[i]);
+		popupString = makeString(points[i], marker);
+
+
 	}
 }
 
-function makeString(point) {
-	
+function makeString(point, marker) {
+	console.log(point);
+	var string = "";
+	string = "\
+		<b>Name: </b> " 			+ point.locName + "<br>"
+		+ "<b>Description: </b>" 	+ point.locDESC + "<br>"
+		+ "<b>Species: </b>" 		+ prettySpecies(point.species);
+	marker.bindPopup(string);
+}
+
+function prettySpecies(species) {
+	var stringToReturn = " ";
+	for (var i = 0; i < species.length; i++) {
+		
+	}
 }
 
 loadMap();
 __map.invalidateSize();
-getPoints();
+getFishPoints();
 __map.invalidateSize();

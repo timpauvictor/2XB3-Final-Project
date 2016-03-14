@@ -46,7 +46,10 @@ function makeString(point, marker) {
 function prettySpecies(species) {
 	var stringToReturn = " ";
 	for (var i = 0; i < species.length; i++) {
-		
+		stringToReturn += "<ul>" + species[i].name;
+		for (var j = 0; j < species[i].lengths.length; j++) {
+			stringToReturn += "<li>"
+		}
 	}
 }
 

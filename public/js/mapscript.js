@@ -1,4 +1,4 @@
-var __startingCoords = [0, 0]
+var __startingCoords = [52.8834037, -108.4173503]
 var __zoomLevel = 4;
 var __map;
 var fishPoints = [];
@@ -19,6 +19,7 @@ function getWaterPoints() {
 	});
 	var realPromise = Promise.resolve(jQueryPromise);
 	realPromise.then(function(val) {
+		console.log(val)
 		plotWaterPoints(val);
 	});
 }
@@ -26,8 +27,15 @@ function getWaterPoints() {
 function plotWaterPoints(points) {
 	for (var i = 0; i < points.length; i++) {
 		var marker = L.marker([points[i].geometry.lat, points[i].geometry.lng]).addTo(__map);
+		// console.log(points[i].stationCode);
+		// marker.bindPopup(points[i].stationCode);
+		marker.on('click', graphStart);
 		waterPoints.push(marker);
 	}
+}
+
+function graphStart(e) {
+	console.log(e.latlng.lat, e.latlng.lng);
 }
 
 function getFishPoints() {
@@ -77,6 +85,8 @@ function prettySpecies(species) {
 		stringToReturn += "</ul></ul>"
 		return stringToReturn;
 }
+
+
 
 loadMap();
 __map.invalidateSize();

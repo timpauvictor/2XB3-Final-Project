@@ -1,4 +1,5 @@
 var fishPoint = require('./models/fishguidepoint.js');
+var waterPoint = require('./models/waterpoint.js');
 
 module.exports = function(app) {
 
@@ -25,6 +26,28 @@ module.exports = function(app) {
 		})
 		console.log('Request fulfilled');
 	});
+
+	app.post('/api/waterPoints', function(req, res) {
+		console.log("Recieved request to add a waterPoint")
+		var newWaterPoint = waterPoint(req.body);
+		newWaterPoint.save(function(err) {
+			if (err) throw (err);
+			console.log('New waterPoint made');
+			res.send('Success');
+		})
+		console.log('Request fulfilled');
+	});
+
+	app.get('/api/waterPoints', function (req, res) {
+		console.log("Received request for all waterPoints");
+		waterPoint.find(function(err, resPoint) {
+			if (err) {
+				res.send(err)
+			}
+			res.json(resPoint);
+		});
+		console.log('Request fulfilled');
+	})
 
 	//frontend routes===========================================
 	app.get('*', function(req, res) {

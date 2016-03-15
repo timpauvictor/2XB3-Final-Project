@@ -2,6 +2,7 @@ var __startingCoords = [0, 0]
 var __zoomLevel = 4;
 var __map;
 var fishPoints = [];
+var waterPoints = [];
 
 function loadMap() {
     __map = L.map("map").setView(__startingCoords, __zoomLevel);
@@ -11,6 +12,24 @@ function loadMap() {
     __map.invalidateSize();
 }
 
+function getWaterPoints() {
+	console.log("Attempting to get points");
+	var jQueryPromise = $.get('http://localhost:8080/api/waterPoints', {
+		dataType: "jsonp"
+	});
+	var realPromise = Promise.resolve(jQueryPromise);
+	realPromise.then(function(val) {
+		plotWaterPoints(val);
+	});
+}
+
+function plotWaterPoints(points) {
+	for (var i = 0; i < points.length; i++) {
+		var marker = L.marker([points[i].geometry.lat, points[i].geometry.lng]).addTo(__map);
+		waterPoints.push(marker);
+	}
+}
+
 function getFishPoints() {
 	console.log("Attempting to get all points");
 	var jQueryPromise = $.get('http://localhost:8080/api/fishPoints', {
@@ -18,25 +37,25 @@ function getFishPoints() {
 	});
 	var realPromise = Promise.resolve(jQueryPromise);
 	realPromise.then(function(val) {
-		plotPoints(val);
-	})
+		plotFishPoints(val);
+	});
 }
 
 function returnFishPoints() {
 	return fishPoints;
 }
 
-function plotPoints(points) {
+function plotFishPoints(points) {
 	console.log(points);
 	for (var i = 0; i < points.length; i++) {
 		console.log(points[i].geometry.lat, points[i].geometry.lng);
 		var marker = L.marker([points[i].geometry.lat, points[i].geometry.lng]).addTo(__map);
-		makeString(points[i], marker);
+		makeFishPointPopup(points[i], marker);
 		fishPoints.push(marker);
 	}
 }
 
-function makeString(point, marker) {
+function makeFishPointPopup(point, marker) {
 	console.log(point);
 	var string = "";
 	string = "\
@@ -63,3 +82,4 @@ loadMap();
 __map.invalidateSize();
 getFishPoints();
 __map.invalidateSize();
+getWaterPoints();

@@ -7,5 +7,5 @@ module.exports = mongoose.model('waterPoint', {
 		lng: {type: Number}
 	},
 	dailyLevels: [{type: Number}],
-	hourlyLevels: [{type: Number}],
+	dailyDischarge: [{type: Number}]
 });

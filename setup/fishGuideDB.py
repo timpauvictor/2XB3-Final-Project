@@ -1,4 +1,4 @@
-#please note this is file specific to FishGuide.txt 
+#please note this is file specific to FishGuide.txt
 #from: <please fill>
 
 """
@@ -8,15 +8,15 @@
 	ALL the entries are in this format
 """
 
-import shlex #if we import this, it'll split on whitespace 
+import shlex #if we import this, it'll split on whitespace
 #while keeping quotes intact (which is exactly what we need)
 def getLines(fileName): #this function simply makes an array of all the lines in the file
-	with open(fileName) as openedFile: #open our file 
+	with open(fileName) as openedFile: #open our file
 		fileContent = openedFile.readlines() #file content is all of the lines in the file
 	return fileContent
 
-def splitLines(ourList): #this function split up the 
-#inividual lines into smaller chunks to match the 
+def splitLines(ourList): #this function split up the
+#inividual lines into smaller chunks to match the
 #header (first line)
 #takes a single list as an argument
 	print("Shlex split running, THIS TAKES TIME. \
@@ -46,13 +46,25 @@ def printItems(ourList): #print all items in a list useful for debugging
 	for item in ourList:
 		print(item)
 
+def startDict(fileContent):
+	filedict = {}
+	for i in range(len(fileContent)):
+		filedict[i]=createDict(fileContent[i])
+	print len(fileContent)			
+	return filedict
 
+def createDict(point):
+	dict = {}
+	dict['waterBodyCode'] = point[0]
+	dict['locName'] = point[1]
+	dict['geometry'] = {'lat':(point[3]), 'lng':(point[4])}
+	dict['species'] = [{'code':point[5]},{'name':point[6]},{'lengths':{'id':'','label':'','advLevel':'','advCauseDesc':'','advCause':'','popTypeID':'','popTypeDESC':''}}]
+	dict['locDESC'] = ""
+	return dict
 
 fileContent = getLines('./data/FishGuide.txt')
 fileContent = splitLines(fileContent)
 fileContent = fixLatLng(fileContent)
-printItems(fileContent)
+filedict = startDict(fileContent)
 
-
-
-
+print filedict

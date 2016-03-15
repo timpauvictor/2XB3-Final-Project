@@ -46,25 +46,38 @@ def printItems(ourList): #print all items in a list useful for debugging
 	for item in ourList:
 		print(item)
 
-def startDict(fileContent):
-	filedict = {}
-	for i in range(len(fileContent)):
-		filedict[i]=createDict(fileContent[i])
-	print len(fileContent)			
-	return filedict
 
-def createDict(point):
-	dict = {}
-	dict['waterBodyCode'] = point[0]
-	dict['locName'] = point[1]
-	dict['geometry'] = {'lat':(point[3]), 'lng':(point[4])}
-	dict['species'] = [{'code':point[5]},{'name':point[6]},{'lengths':{'id':'','label':'','advLevel':'','advCauseDesc':'','advCause':'','popTypeID':'','popTypeDESC':''}}]
-	dict['locDESC'] = ""
-	return dict
+def getNumUniqueLocations(ourList):
+	counter = 1;
+	for i in range(1, len(ourList)):
+		# print(ourList[i][0])
+		# print(ourList[i-1][0])
+		if (ourList[i][0] != ourList[i-1][0]):
+			counter += 1
+	print(counter)
+	return counter
+
+def makeDict():
+
+
+# def startDict(fileContent):
+# 	filedict = {}
+# 	for i in range(len(fileContent)):
+# 		filedict[i]=createDict(fileContent[i])
+# 	print(len(fileContent))
+# 	return filedict
+
+# def createDict(point):
+# 	dict = {}
+# 	dict['waterBodyCode'] = point[0]
+# 	dict['locName'] = point[1]
+# 	dict['geometry'] = {'lat':(point[3]), 'lng':(point[4])}
+# 	dict['species'] = [{'code':point[5]},{'name':point[6]},{'lengths':{'id':'','label':'','advLevel':'','advCauseDesc':'','advCause':'','popTypeID':'','popTypeDESC':''}}]
+# 	dict['locDESC'] = ""
+# 	return dict
 
 fileContent = getLines('./data/FishGuide.txt')
 fileContent = splitLines(fileContent)
 fileContent = fixLatLng(fileContent)
-filedict = startDict(fileContent)
+uniqueLocations = getNumUniqueLocations(fileContent)
 
-print filedict

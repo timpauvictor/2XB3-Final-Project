@@ -1,7 +1,7 @@
 var __startingCoords = [0, 0]
 var __zoomLevel = 4;
 var __map;
-var allMarkers = [];
+var fishPoints = [];
 
 function loadMap() {
     __map = L.map("map").setView(__startingCoords, __zoomLevel);
@@ -22,14 +22,17 @@ function getFishPoints() {
 	})
 }
 
+function returnFishPoints() {
+	return fishPoints;
+}
+
 function plotPoints(points) {
 	console.log(points);
 	for (var i = 0; i < points.length; i++) {
 		console.log(points[i].geometry.lat, points[i].geometry.lng);
 		var marker = L.marker([points[i].geometry.lat, points[i].geometry.lng]).addTo(__map);
-		popupString = makeString(points[i], marker);
-
-
+		makeString(points[i], marker);
+		fishPoints.push(marker);
 	}
 }
 
@@ -37,14 +40,14 @@ function makeString(point, marker) {
 	console.log(point);
 	var string = "";
 	string = "\
-		<b>Name: </b>" 				+ point.locName 				+ "<br>"
-		+ "<b>Description: </b>" 	+ point.locDESC 				+ "<br>"
-		+ "<b>Species: </b>" 		+ prettySpecies(point.species); + "<br>"
+			<b>Name: </b>" 				+ point.locName 				+ "<br>"
+		+ 	"<b>Description: </b>" 		+ point.locDESC 				+ "<br>"
+		+ 	"<b>Species: </b>" 			+ prettySpecies(point.species); + "<br>"
 	marker.bindPopup(string);
 }
 
 function prettySpecies(species) {
-	console.log(species);
+	// console.log(species);
 	var stringToReturn = "<ul>";
 	for (var i = 0; i < species.length; i++) {
 		stringToReturn += "<li>" + species[i].name + "</li>";

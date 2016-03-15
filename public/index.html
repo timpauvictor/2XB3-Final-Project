@@ -21,12 +21,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
-    <!-- <meta name="description" content="The HTML5 Herald"> -->
-    <!-- <meta name="author" content="SitePoint"> -->
-    <!-- <link rel="stylesheet" href="css/styles.css?v=1.0"> -->
-    <!--[if lt IE 9]>
-    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
+    <link rel="stylesheet" href="./css/styles.css"/>
 </head>
 
 <body>
@@ -58,13 +53,48 @@
         </div>
         <main class="mdl-layout__content">
             <div class="page-content">
-                <div id="map" class="col-md-8" style="position: absolute; top:0; bottom:0; right:0; left:0;">
-                    <script src="./js/mapscript.js"></script>
+                <div id="map" style="position: absolute; top: 0; bottom: 0; left: 0; right: 0; width: 80%">
                 </div>
-                <div id="graphDiv">
+                <div id="list" style="position: absolute; top: 0; bottom: 0; left: 80%; right: 0">
+                    <table style="width:100%">
+                        <tr>
+                            <th><b>Location Code: <a>Sort</a></b></th>
+                            <th><b>Location: <a>Sort</a></b></th>
+                            <th><b>Species Code: <a>Sort</a></b></th>
+                            <th><b>Species: <a>Sort</a></b></th>
+                        </tr>
+                        <tr>
+                            <th>45227855</th>
+                            <th>Oxtongue Lake</th>
+                            <th>271</th>
+                            <th>Ling (Burbot)</th>
+                        </tr>
+                        <tr>
+                            <th>45227855</th>
+                            <th>Oxtongue Lake</th>
+                            <th>316</th>
+                            <th>Smallmouth Bass</th>
+                        </tr>
+                        <tr>
+                            <th>45227921</th>
+                            <th>Fox Lake</th>
+                            <th>131</th>
+                            <th>Northern Pike</th>
+                        </tr>
+                        <tr>
+                            <th>45227921</th>
+                            <th>Fox Lake</th>
+                            <th>316</th>
+                            <th>Smallmouth Bass</th>
+                        </tr>
+                    </table>
                 </div>
+                <script src="./js/listScript.js"></script>
+                <script src="./js/mapscript.js"></script>
             </div>
-        </main>
+            <div id="graphDiv"></div>
+    </div>
+    </main>
     </div>
     <!-- <script src="js/scripts.js"></script> -->
 </body>

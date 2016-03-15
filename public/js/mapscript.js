@@ -37,20 +37,23 @@ function makeString(point, marker) {
 	console.log(point);
 	var string = "";
 	string = "\
-		<b>Name: </b> " 			+ point.locName + "<br>"
-		+ "<b>Description: </b>" 	+ point.locDESC + "<br>"
-		+ "<b>Species: </b>" 		+ prettySpecies(point.species);
+		<b>Name: </b>" 				+ point.locName 				+ "<br>"
+		+ "<b>Description: </b>" 	+ point.locDESC 				+ "<br>"
+		+ "<b>Species: </b>" 		+ prettySpecies(point.species); + "<br>"
 	marker.bindPopup(string);
 }
 
 function prettySpecies(species) {
-	var stringToReturn = " ";
+	console.log(species);
+	var stringToReturn = "<ul>";
 	for (var i = 0; i < species.length; i++) {
-		stringToReturn += "<ul>" + species[i].name;
+		stringToReturn += "<li>" + species[i].name + "</li>";
 		for (var j = 0; j < species[i].lengths.length; j++) {
-			stringToReturn += "<li>"
+			stringToReturn += "<ul><li>" + species[i].lengths[j].label + "</li></ul>"
 		}
 	}
+		stringToReturn += "</ul></ul>"
+		return stringToReturn;
 }
 
 loadMap();

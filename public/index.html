@@ -12,8 +12,15 @@
         <!-- Load jQuery from CDN -->
         <script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
         <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+				<!--Load custom styles-->
+				<link href="./css/styles.css" rel="stylesheet" type="text/css"/>
+				<!--Load chart.js-->
+				<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js"></script>
     </head>
     <body>
+				<div id="light" class="white_content"><canvas id="dataChart"></canvas><a href = "javascript:void(0)" onclick = "document.getElementById('light').style.display='none';document.getElementById('fade').style.display='none'">Close</a> </div>
+				<div id="fade" class="black_overlay"></div>
+	
         <!-- Always shows a header, even in smaller screens. -->
         <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
             <header class="mdl-layout__header">
@@ -55,11 +62,7 @@
                         </tr>
                     </table>
                 </div>
-								<div id="light" class="white_content">This is the lightbox content <a href = "javascript:void(0)" onclick = "document.getElementById('light').style.display='none';document.getElementById('fade').style.display='none'">Close</a> </div>
-								<div id="fade" class="black_overlay"></div>
-                <!-- <script src="./js/listScript.js"></script> -->
             </div>
-            <div id="graphDiv"></div>
             <script src="./js/graphscript.js"></script>
             <script src="./js/listScript.js"></script>
             <script src="./js/mapscript.js"></script>

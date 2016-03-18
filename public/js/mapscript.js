@@ -1,8 +1,8 @@
-var __startingCoords = [0, 0] // variable to store the starting coordinates that leaflet will be focused on when launching
 var __zoomLevel = 4;          // the amount of zoom we're at
-var __map;                    // our main map variable
 var fishPoints = [];          // an array to store all fish points, this is used for toggling them on and off
-var waterPoints = [];         // like above, except for all the water points
+var __startingCoords = [52.8834037, -108.4173503]
+var __map;
+var waterPoints = [];
 
 function loadMap() {                                         // initial function to load our map in to the div
 __map = L.map("map").setView(__startingCoords, __zoomLevel); // inits a map with the given start coords and
@@ -37,7 +37,21 @@ function waterClick(e) { //function to handle any clicks on a waterPoint
 	document.getElementById('fade').style.display='block'; //get our fade and display it (this is what causes the background to fade to black)
 }
 
-function getFishPoints() { //idential to previous function, getWaterPoints
+function plotWaterPoints(points) {
+	for (var i = 0; i < points.length; i++) {
+		var marker = L.marker([points[i].geometry.lat, points[i].geometry.lng]).addTo(__map);
+		// console.log(points[i].stationCode);
+		// marker.bindPopup(points[i].stationCode);
+		marker.on('click', graphStart);
+		waterPoints.push(marker);
+	}
+}
+
+function graphStart(e) {
+	console.log(e.latlng.lat, e.latlng.lng);
+}
+
+function getFishPoints() {
 	console.log("Attempting to get all points");
 	var jQueryPromise = $.get('http://localhost:8080/api/fishPoints', { //however, this has a different URL so we get all the fish points instead
 		dataType: "jsonp"
@@ -79,3 +93,5 @@ function prettySpecies(species) { //function to print the species all pretty
 loadMap();        // call load map
 getFishPoints();  // get our fish points and plot them
 getWaterPoints(); // get our water points and plot them
+
+

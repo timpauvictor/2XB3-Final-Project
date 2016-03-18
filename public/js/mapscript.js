@@ -31,6 +31,7 @@ function plotWaterPoints(points) { //a function which makes the maekrs for all t
 }
 
 function waterClick(e) { //function to handle any clicks on a waterPoint
+	console.log("water point clicked");
 	console.log([e.latlng.lat, e.latlng.lng]);
 	graphInit([e.latlng.lat, e.latlng.lng]); //this function is located in ./graphscript.js
 	document.getElementById('light').style.display='block'; //get our div element called light and display it (this is the 'popup')
@@ -42,13 +43,9 @@ function plotWaterPoints(points) {
 		var marker = L.marker([points[i].geometry.lat, points[i].geometry.lng]).addTo(__map);
 		// console.log(points[i].stationCode);
 		// marker.bindPopup(points[i].stationCode);
-		marker.on('click', graphStart);
+		marker.on('click', waterClick);
 		waterPoints.push(marker);
 	}
-}
-
-function graphStart(e) {
-	console.log(e.latlng.lat, e.latlng.lng);
 }
 
 function getFishPoints() {

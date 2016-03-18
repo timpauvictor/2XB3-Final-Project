@@ -31,8 +31,8 @@ function plotWaterPoints(points) { //a function which makes the maekrs for all t
 }
 
 function waterClick(e) { //function to handle any clicks on a waterPoint
-	console.log("water point clicked");
-	console.log([e.latlng.lat, e.latlng.lng]);
+	//console.log("water point clicked");
+	//console.log([e.latlng.lat, e.latlng.lng]);
 	graphInit([e.latlng.lat, e.latlng.lng]); //this function is located in ./graphscript.js
 	document.getElementById('light').style.display='block'; //get our div element called light and display it (this is the 'popup')
 	document.getElementById('fade').style.display='block'; //get our fade and display it (this is what causes the background to fade to black)

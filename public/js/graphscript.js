@@ -8,10 +8,10 @@ function graphInit(latlng) {
 	var realPromise = Promise.resolve(jQueryPromise);
 	realPromise.then(function(val) {
 		//console.log(val);
-		//dataPrep(val);
+		dataPrep(val);
 	});
 }
 
 function dataPrep(waterPoint) {
-
+	console.log(waterPoint);
 }

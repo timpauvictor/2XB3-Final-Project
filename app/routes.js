@@ -27,6 +27,24 @@ module.exports = function(app) {
 		console.log('Request fulfilled');
 	});
 
+	app.post('/api/waterPointLatLng', function(req, res) {
+		//console.log(req.body);
+		waterPoint.find(function(err, resPoint) {
+			if (err) {
+				res.send(err);
+			}
+			//console.log(resPoint);
+			for (var i = 0; i < resPoint.length; i++) {
+				console.log(resPoint[i].geometry.lat, req.body.lat);
+				console.log(resPoint[i].geometry.lng, req.body.lng);
+				if ((req.body.lat === resPoint[i].geometry.lat) && (req.body.lng === resPoint[i].geometry.lng)) {
+					console.log("Match found");
+					res.send(resPoint[i]);					
+				}
+			}	
+		});
+	});
+
 	app.post('/api/waterPoints', function(req, res) {
 		console.log("Recieved request to add a waterPoint")
 		var newWaterPoint = waterPoint(req.body);

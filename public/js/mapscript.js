@@ -1,38 +1,44 @@
-var __startingCoords = [0, 0]
-var __zoomLevel = 4;
-var __map;
-var fishPoints = [];
-var waterPoints = [];
+var __startingCoords = [0, 0] // variable to store the starting coordinates that leaflet will be focused on when launching
+var __zoomLevel = 4;          // the amount of zoom we're at
+var __map;                    // our main map variable
+var fishPoints = [];          // an array to store all fish points, this is used for toggling them on and off
+var waterPoints = [];         // like above, except for all the water points
 
-function loadMap() {
-    __map = L.map("map").setView(__startingCoords, __zoomLevel);
-    console.log('map created');
-    L.esri.basemapLayer("Topographic").addTo(__map);
-    console.log('topographic layer added');
-    __map.invalidateSize();
+function loadMap() {                                         // initial function to load our map in to the div
+__map = L.map("map").setView(__startingCoords, __zoomLevel); // inits a map with the given start coords and
+console.log('map created');                                  // console log that we've created a map
+L.esri.basemapLayer("Topographic").addTo(__map);             // load up esri's tile layers, in this case it's called "topographic"
+console.log('topographic layer added');                      // log to the console that this has been done
 }
 
-function getWaterPoints() {
-	console.log("Attempting to get points");
-	var jQueryPromise = $.get('http://localhost:8080/api/waterPoints', {
-		dataType: "jsonp"
+function getWaterPoints() { //function that makes a get request for all of our water points
+	console.log("Attempting to get points"); //log that we're attempting a get request
+	var jQueryPromise = $.get('http://localhost:8080/api/waterPoints', { //make a new variable that store the get request object, this doesn't resolve it
+		dataType: "jsonp" //necessary to play nicely with newer version of node
 	});
-	var realPromise = Promise.resolve(jQueryPromise);
-	realPromise.then(function(val) {
-		plotWaterPoints(val);
+	var realPromise = Promise.resolve(jQueryPromise); //realPromise is another variable that gets created with a trigger on when the problem resolves
+	realPromise.then(function(val) { //when it gets triggered
+		plotWaterPoints(val); //call a new function to place the points on the map
 	});
 }
 
-function plotWaterPoints(points) {
-	for (var i = 0; i < points.length; i++) {
-		var marker = L.marker([points[i].geometry.lat, points[i].geometry.lng]).addTo(__map);
-		waterPoints.push(marker);
+function plotWaterPoints(points) { //a function which makes the maekrs for all the points we got
+	for (var i = 0; i < points.length; i++) { //iterate through all the points
+		var marker = L.marker([points[i].geometry.lat, points[i].geometry.lng]).addTo(__map); //for each one, get it's latitude and longitude and plot it
+		marker.on('click', waterClick); //make a new event listener for our marker such that whenever it is clicked, it calls the function waterClick, it sends an event object as arguments (e)
+		waterPoints.push(marker); //push the new marker we made into our array of water points
 	}
 }
 
-function getFishPoints() {
+function waterClick(e) { //function to handle any clicks on a waterPoint
+	graphMaker(e.latlng) //this function is located in ./graphscript.js
+	document.getElementById('light').style.display='block'; //get our div element called light and display it (this is the 'popup')
+	document.getElementById('fade').style.display='block'; //get our fade and display it (this is what causes the background to fade to black)
+}
+
+function getFishPoints() { //idential to previous function, getWaterPoints
 	console.log("Attempting to get all points");
-	var jQueryPromise = $.get('http://localhost:8080/api/fishPoints', {
+	var jQueryPromise = $.get('http://localhost:8080/api/fishPoints', { //however, this has a different URL so we get all the fish points instead
 		dataType: "jsonp"
 	});
 	var realPromise = Promise.resolve(jQueryPromise);
@@ -41,45 +47,34 @@ function getFishPoints() {
 	});
 }
 
-function returnFishPoints() {
-	return fishPoints;
-}
-
-function plotFishPoints(points) {
-	console.log(points);
+function plotFishPoints(points) { //identical to the earlier function
 	for (var i = 0; i < points.length; i++) {
-		console.log(points[i].geometry.lat, points[i].geometry.lng);
 		var marker = L.marker([points[i].geometry.lat, points[i].geometry.lng]).addTo(__map);
-		makeFishPointPopup(points[i], marker);
-		fishPoints.push(marker);
+		makeFishPointPopup(points[i], marker); //except we make a popup for each one as opposed to having an onclick event
+		fishPoints.push(marker); //and we add it to a different array
 	}
 }
 
-function makeFishPointPopup(point, marker) {
-	console.log(point);
-	var string = "";
-	string = "\
-			<b>Name: </b>" 				+ point.locName 				+ "<br>"
+function makeFishPointPopup(point, marker) { //function to make the popup for a given marker and point
+	var string = ""; //new empty string
+	string = "<b>Name: </b>" 				+ point.locName 				        + "<br>" 
 		+ 	"<b>Description: </b>" 		+ point.locDESC 				+ "<br>"
-		+ 	"<b>Species: </b>" 			+ prettySpecies(point.species); + "<br>"
-	marker.bindPopup(string);
+		+ 	"<b>Species: </b>" 			  + prettySpecies(point.species); + "<br>"; //adds the name, description and species located there to the popup
+	marker.bindPopup(string);//make a new popup for our marker with the string we just made
 }
 
-function prettySpecies(species) {
-	// console.log(species);
-	var stringToReturn = "<ul>";
-	for (var i = 0; i < species.length; i++) {
-		stringToReturn += "<li>" + species[i].name + "</li>";
-		for (var j = 0; j < species[i].lengths.length; j++) {
-			stringToReturn += "<ul><li>" + species[i].lengths[j].label + "</li></ul>"
+function prettySpecies(species) { //function to print the species all pretty
+	var stringToReturn = "<ul>"; //initially start a list in html
+	for (var i = 0; i < species.length; i++) { //parse through the species
+		stringToReturn += "<li>" + species[i].name + "</li>"; //add the species name to the list
+		for (var j = 0; j < species[i].lengths.length; j++) { //parse through all of the lengths for the species
+			stringToReturn += "<ul><li>" + species[i].lengths[j].label + "</li><ul>"; //add the lengths to the string
 		}
 	}
-		stringToReturn += "</ul></ul>"
-		return stringToReturn;
+		stringToReturn += "</ul></ul>" //finish off the last tables
+		return stringToReturn; //return it
 }
 
-loadMap();
-__map.invalidateSize();
-getFishPoints();
-__map.invalidateSize();
-getWaterPoints();
+loadMap();        // call load map
+getFishPoints();  // get our fish points and plot them
+getWaterPoints(); // get our water points and plot them

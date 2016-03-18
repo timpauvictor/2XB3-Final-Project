@@ -1,3 +1,3 @@
 function graphMaker(latlng) {
-	console.log(latlng);	
+	console.log(latlng);
 }

@@ -57,27 +57,51 @@ def getNumUniqueLocations(ourList):
 	print(counter)
 	return counter
 
-def makeDict():
 
 
-# def startDict(fileContent):
-# 	filedict = {}
-# 	for i in range(len(fileContent)):
-# 		filedict[i]=createDict(fileContent[i])
-# 	print(len(fileContent))
-# 	return filedict
+# parse line 0, create dict entry
+#lastlocnameindex=0
+# for loop through all lines
+#for each line, check if the locname==the last locname
+#if yes add, the fish data to the last locnameindex
 
-# def createDict(point):
-# 	dict = {}
-# 	dict['waterBodyCode'] = point[0]
-# 	dict['locName'] = point[1]
-# 	dict['geometry'] = {'lat':(point[3]), 'lng':(point[4])}
-# 	dict['species'] = [{'code':point[5]},{'name':point[6]},{'lengths':{'id':'','label':'','advLevel':'','advCauseDesc':'','advCause':'','popTypeID':'','popTypeDESC':''}}]
-# 	dict['locDESC'] = ""
-# 	return dict
 
+def startDict(fileContent):
+	filedict={}
+	filedict[0] = createDict(fileContent[0])
+	lastpoint = fileContent[0]
+	for i in range(1,len(fileContent)):
+		filedict[i]=createDict(fileContent[i],lastpoint)
+	print(len(fileContent))
+	return filedict
+
+def createDict(point):		#case for first line
+	dict = {}
+	dict['waterBodyCode'] = point[0]
+	dict['locName'] = point[1]
+	dict['geometry'] = {'lat':(point[3]), 'lng':(point[4])}
+	dict['species'] = [{'code':point[5]},{'name':point[6]},{'lengths':{'id':'','label':'','advLevel':'','advCauseDesc':'','advCause':'','popTypeID':'','popTypeDESC':''}}]
+	dict['locDESC'] = ""
+
+def createDict(point,lastpoint):
+	dict={}
+	if (point[0] != lastpoint[0]):	# if waterbody id is different from last one
+			lastpoint = point
+			dict['waterBodyCode'] = point[0]
+			dict['locName'] = point[1]
+			dict['geometry'] = {'lat':(point[3]), 'lng':(point[4])}
+			dict['species'] = [{'code':point[5]},{'name':point[6]},{'lengths':{'id':'','label':'','advLevel':'','advCauseDesc':'','advCause':'','popTypeID':'','popTypeDESC':''}}]
+			dict['locDESC'] = ""
+	else:
+		dict[lastpoint['species']].add({'code':point[5]},{'name':point[6]},{'lengths':{'id':'','label':'','advLevel':'','advCauseDesc':'','advCause':'','popTypeID':'','popTypeDESC':''})
+
+
+
+# create dict will check if the name is the same as the previous dictionary
+# if yes then go to function to append values to dictionary
+# if no, create new dict
+dict = {}
 fileContent = getLines('./data/FishGuide.txt')
 fileContent = splitLines(fileContent)
 fileContent = fixLatLng(fileContent)
 uniqueLocations = getNumUniqueLocations(fileContent)
-

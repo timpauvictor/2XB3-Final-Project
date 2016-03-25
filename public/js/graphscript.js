@@ -23,7 +23,19 @@ function graphInit(latlng) {
 }
 
 function makeLabels() {
-	var labels = ["00:00", "06:00", "12:00", "18:00", "24:00"];
+	labels = [];
+	hours = 0;
+	minutes = 0;
+	for (var i = 0; i < 288; i++) {
+		labels.push(String(hours) + ":" + String(minutes));
+		if (minutes === 55) {
+			hours += 1;
+			minutes = 0;
+		} else {
+			minutes += 5;
+		}
+	}
+
 	return labels
 }
 
@@ -36,7 +48,7 @@ function dataPrep(data, stationCode) {
 	rawData = [];
 
 	for (var i = 0; i < data.length; i++) {
-		rawData.push([i, data[i]]);
+		rawData.push([labels[i], data[i]]);
 	}
 	
 	//console.log("rawData", rawData);
@@ -47,7 +59,7 @@ function dataPrep(data, stationCode) {
 function makeGraph() {
 	console.log("called");
 	var data = new google.visualization.DataTable();
-	data.addColumn('number', 'Time');
+	data.addColumn('string', 'Time');
 	data.addColumn('number', code);
 
 	data.addRows(rawData);

@@ -76,12 +76,12 @@ function makeFishPointPopup(point, marker) { //function to make the popup for a 
 	marker.bindPopup(string);//make a new popup for our marker with the string we just made
 }
 
-function prettySpecies(species) { //function to print the species all pretty
-	var stringToReturn = "<ul>"; //initially start a list in html
-	for (var i = 0; i < species.length; i++) { //parse through the species
-		stringToReturn += "<li>" + species[i].name + "</li>"; //add the species name to the list
-		for (var j = 0; j < species[i].lengths.length; j++) { //parse through all of the lengths for the species
-			stringToReturn += "<ul><li>" + species[i].lengths[j].label + "</li><ul>"; //add the lengths to the string
+function prettySpecies(species) {                                         // function to print the species all pretty
+  var stringToReturn = "<ul>";                                              // initially start a list in html
+   for (var i = 0; i < species.length; i++) {                                // parse through the species
+    stringToReturn += "<li>" + species[i].name + "</li>";                     // add the species name to the list
+    for (var j = 0; j < species[i].lengths.length; j++) {                     // parse through all of the lengths for the species
+      stringToReturn += "<ul><li>" + species[i].lengths[j].label + "</li></ul>"; // add the lengths to the string
 		}
 	}
 		stringToReturn += "</ul></ul>" //finish off the last tables

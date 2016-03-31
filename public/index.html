@@ -1,74 +1,80 @@
-    <head>
-        <meta charset="utf-8">
-        <title>FishFriend</title>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-        <link rel="stylesheet" href="https://code.getmdl.io/1.1.2/material.indigo-pink.min.css">
-        <script defer src="https://code.getmdl.io/1.1.2/material.min.js"></script>
-        <!-- Load Leaflet from CDN-->
-        <link href="https://leafletjs-cdn.s3.amazonaws.com/content/leaflet/master/leaflet.css" rel="stylesheet" type="text/css" />
-        <script src="https://leafletjs-cdn.s3.amazonaws.com/content/leaflet/master/leaflet.js"></script>
-        <!-- Load Esri Leaflet from CDN -->
-        <script src="https://cdn.jsdelivr.net/leaflet.esri/2.0.0-beta.8/esri-leaflet.js"></script>
-        <!-- Load jQuery from CDN -->
-        <script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
-        <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
-				<!--Load custom styles-->
-				<link href="./css/styles.css" rel="stylesheet" type="text/css"/>
-				<!--Load chart.js-->
-				<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js"></script>
-    </head>
-    <body>
-				<div id="light" class="white_content"><canvas id="dataChart"></canvas><a href = "javascript:void(0)" onclick = "document.getElementById('light').style.display='none';document.getElementById('fade').style.display='none'">Close</a> </div>
-				<div id="fade" class="black_overlay"></div>
-	
-        <!-- Always shows a header, even in smaller screens. -->
-        <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
-            <header class="mdl-layout__header">
-                <div class="mdl-layout__header-row">
-                    <!-- Title -->
-                    <span class="mdl-layout-title">Title</span>
-                    <!-- Add spacer, to align navigation to the right -->
-                    <div class="mdl-layout-spacer"></div>
-                    <!-- Navigation. We hide it in small screens. -->
-                    <nav class="mdl-navigation mdl-layout--large-screen-only">
-                        <a class="mdl-navigation__link" href="">Link</a>
-                        <a class="mdl-navigation__link" href="">Link</a>
-                        <a class="mdl-navigation__link" href="">Link</a>
-                        <a class="mdl-navigation__link" href="">Link</a>
-                    </nav>
-                </div>
-            </header>
-            <div class="mdl-layout__drawer">
+<head>
+    <meta charset="utf-8">
+    <title>FishFriend</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://code.getmdl.io/1.1.2/material.indigo-pink.min.css">
+    <script defer src="https://code.getmdl.io/1.1.2/material.min.js"></script>
+    <!-- Load Leaflet from CDN-->
+    <link href="https://leafletjs-cdn.s3.amazonaws.com/content/leaflet/master/leaflet.css" rel="stylesheet" type="text/css" />
+    <script src="https://leafletjs-cdn.s3.amazonaws.com/content/leaflet/master/leaflet.js"></script>
+    <!-- Load Esri Leaflet from CDN -->
+    <script src="https://cdn.jsdelivr.net/leaflet.esri/2.0.0-beta.8/esri-leaflet.js"></script>
+    <!-- Load jQuery from CDN -->
+    <script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
+    <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+    <!--Load custom styles-->
+    <link href="./css/styles.css" rel="stylesheet" type="text/css" />
+    <!--Load google charts API-->
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+</head>
+
+<body>
+    <div id="light" class="white_content"><span class="closeButton"><a href = "javascript:void(0)" onclick = "document.getElementById('light').style.display='none';document.getElementById('fade').style.display='none'">Close</a></span>
+        <div id="inner-light"></div>
+    </div>
+    <div id="fade" class="black_overlay"></div>
+    <!-- Always shows a header, even in smaller screens. -->
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+        <header class="mdl-layout__header">
+            <div class="mdl-layout__header-row">
+                <!-- Title -->
                 <span class="mdl-layout-title">Title</span>
-                <nav class="mdl-navigation">
+                <!-- Add spacer, to align navigation to the right -->
+                <div class="mdl-layout-spacer"></div>
+                <!-- Navigation. We hide it in small screens. -->
+                <nav class="mdl-navigation mdl-layout--large-screen-only">
                     <a class="mdl-navigation__link" href="">Link</a>
                     <a class="mdl-navigation__link" href="">Link</a>
                     <a class="mdl-navigation__link" href="">Link</a>
                     <a class="mdl-navigation__link" href="">Link</a>
                 </nav>
             </div>
-            <main class="mdl-layout__content">
+        </header>
+        <div class="mdl-layout__drawer">
+            <span class="mdl-layout-title">Title</span>
+            <nav class="mdl-navigation">
+                <a class="mdl-navigation__link" href="">Link</a>
+                <a class="mdl-navigation__link" href="">Link</a>
+                <a class="mdl-navigation__link" href="">Link</a>
+                <a class="mdl-navigation__link" href="">Link</a>
+            </nav>
+        </div>
+        <main class="mdl-layout__content">
             <div class="page-content">
                 <div id="map" style="position: absolute; top: 0; bottom: 0; left: 0; right: 0; width: 80%">
                 </div>
-                
                 <div id="list" style="position: absolute; top: 0; bottom: 0; left: 80%; right: 0">
-                    <table style="width:100%">
-                        <tr>
-                            <th><b>Location Code: <a>Sort</a></b></th>
-                            <th><b>Location:</b></th>
-                            <th><b>Species Code: <a>Sort</a></b></th>
-                            <th><b>Species:</b></th>
-                        </tr>
+                    <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
+                        <thead>
+                            <tr>
+                                <th class="mdl-data-table__cell--non-numeric">Location Code</th>
+                                <th>Location</th>
+                                <th>Species Code</th>
+                                <th>Species</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
                     </table>
                 </div>
             </div>
             <script src="./js/graphscript.js"></script>
             <script src="./js/listScript.js"></script>
             <script src="./js/mapscript.js"></script>
-        </div>
-        </main>
+    </div>
+    </main>
     </div>
     <!-- <script src="js/scripts.js"></script> -->
 </body>
+
 </html>

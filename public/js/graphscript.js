@@ -1,5 +1,15 @@
+var labels;
+var code;
+var rawData;
+var loadCalled = false;
+
 function graphInit(latlng) {
 	//console.log(latlng);
+	if (!loadCalled) {
+		google.charts.load('current', {'packages':['line']});
+		loadCalled = true;
+	}
+
 	console.log("Graph: Attempting to find a matching piece of data for coords:" + latlng);
 	var jQueryPromise = $.post("http://localhost:8080/api/waterPointLatLng", {
 		"lat": latlng[0],
@@ -8,7 +18,7 @@ function graphInit(latlng) {
 	var realPromise = Promise.resolve(jQueryPromise);
 	realPromise.then(function(val) {
 		console.log("Match found");
-		dataPrep([val.dailyLevels, val.stationCode]);
+		dataPrep(val.dailyLevels, val.stationCode);
 	});
 }
 
@@ -16,7 +26,7 @@ function makeLabels() {
 	labels = [];
 	hours = 0;
 	minutes = 0;
-	for (var i = 0; i < 288; i++) { //there are 288 5 minute intervals in 24 hours
+	for (var i = 0; i < 288; i++) {
 		labels.push(String(hours) + ":" + String(minutes));
 		if (minutes === 55) {
 			hours += 1;
@@ -25,15 +35,45 @@ function makeLabels() {
 			minutes += 5;
 		}
 	}
-	return labels;
+
+	return labels
 }
+
 
 function dataPrep(data, stationCode) {
-	console.log(data, stationCode);
+	//console.log(data, stationCode);
 	labels = makeLabels();
-	makeGraph(data, labels, stationCode);	
+	code = stationCode;
+	//console.log("data", data);
+	rawData = [];
+
+	for (var i = 0; i < data.length; i++) {
+		rawData.push([labels[i], data[i]]);
+	}
+	
+	//console.log("rawData", rawData);
+
+	google.charts.setOnLoadCallback(makeGraph);
 }
 
-function makeGraph(data, labels, code) {
-	
+function makeGraph() {
+	console.log("called");
+	var data = new google.visualization.DataTable();
+	data.addColumn('string', 'Time');
+	data.addColumn('number', code);
+
+	data.addRows(rawData);
+	var options = {
+		chart: {
+			title: "Water Levels for " + code
+		},
+		width: 900,
+		height: 500
+	};
+	console.log(data)
+
+	var chart = new google.charts.Line(document.getElementById('inner-light'));
+	chart.draw(data, google.charts.Line.convertOptions(options));
+
 }
+

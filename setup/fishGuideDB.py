@@ -119,7 +119,7 @@ def createDict(point,lastpoint,count):
                         dict['waterBodyCode'] = point[0]
                         dict['locName'] = point[1]
                         dict['geometry'] = {'lat':(point[3]), 'lng':(point[4])}
-                        dict['species'] = [{'code':point[5]},{'name':point[6]},{'lengths':{'id':'','label':'','advLevel':'','advCauseDesc':'','advCause':'','popTypeID':'','popTypeDESC':''}}]
+                        dict['species'] = [{'code':(point[5]),'name':point[6],'lengths':[point[11]]}]
                         dict['locDESC'] = ""
                         return dict
         else:

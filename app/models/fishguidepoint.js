@@ -12,15 +12,9 @@ module.exports = mongoose.model('fishGuidePoint', {
 	species: [{
 		code: {type: Number, default: 0},
 		name: {type: String, default: ' '},
-		lengths: [{
-			id: {type: String, default: ' '},
-			label: {type: String, default: ' '},
-			advLevel: {type: Number, default: ' '},
-			advCause: {type: Number, default: ' '},
-			advCauseDesc: {type: String, default: 0},
-			popTypeID: {type: Number, default: 0},
-			popTypeDESC: {type: String, default: 0}
-		}]
+		lengths: [			
+			label: {type: String, default: ' '}				//just a list of strings, each string is of the form: "55-60cm"
+		]
 	}],
 	locDESC: {type: String, default: ' '}
 	//defining anything else happens here, make sure you add a comma

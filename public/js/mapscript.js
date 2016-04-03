@@ -71,7 +71,7 @@ function plotFishPoints(points) { //identical to the earlier function
 function makeFishPointPopup(point, marker) { //function to make the popup for a given marker and point
 	var string = ""; //new empty string
 	string = "<b>Name: </b>" 				+ point.locName 				        + "<br>" 
-		+ 	"<b>Description: </b>" 		+ point.locDESC 				+ "<br>"
+		+ 	"<b>Description: </b>" 		+ ""				+ "<br>"
 		+ 	"<b>Species: </b>" 			  + prettySpecies(point.species); + "<br>"; //adds the name, description and species located there to the popup
 	marker.bindPopup(string);//make a new popup for our marker with the string we just made
 }
@@ -81,7 +81,7 @@ function prettySpecies(species) {                                         // fun
    for (var i = 0; i < species.length; i++) {                                // parse through the species
     stringToReturn += "<li>" + species[i].name + "</li>";                     // add the species name to the list
     for (var j = 0; j < species[i].lengths.length; j++) {                     // parse through all of the lengths for the species
-      stringToReturn += "<ul><li>" + species[i].lengths[j].label + "</li></ul>"; // add the lengths to the string
+      stringToReturn += "<ul><li>" + species[i].lengths[j] + "</li></ul>"; // add the lengths to the string
 		}
 	}
 		stringToReturn += "</ul></ul>" //finish off the last tables

@@ -69,22 +69,37 @@ def getNumUniqueLocations(ourList):
 def startDict(fileContent):
         count = 1
         filedict['0'] = createDict1(fileContent[1])
-        lastpoint = fileContent[1][1]
+        lastpoint = fileContent[1]
         for i in range(1,len(fileContent)):
                 sampledict={}
                 point = fileContent[i]
-                if (point[1] != lastpoint):  # if waterbody id is different from last one
-                        lastpoint = point[1]
+                if (point[1] != lastpoint[1]):  # if waterbody id is different from last one
+                        lastpoint = point
                         sampledict['waterBodyCode'] = point[0]
                         sampledict['locName'] = point[1]
                         sampledict['geometry'] = {'lat':(point[3]), 'lng':(point[4])}
-                        sampledict['species'] = [{'code':point[5]},{'name':point[6]},{'lengths':{'id':'','label':'','advLevel':'','advCauseDesc':'','advCause':'','popTypeID':'','popTypeDESC':''}}]
-                        sampledict['locDESC'] = ""
+                        sampledict['species'] = [{'code':(point[5]),'name':point[6],'lengths':[point[11]]}]
+                        
+                else:
+                        if (point[5]==lastpoint[5]):                                            # if the fish ID are the same
+                                filedict[str(count-1)]['species'][len(filedict[str(count-1)]['species'])-1]['lengths'].append(point[11]) # append length to last dict
+                                lastpoint = point
+                        else:
+                                filedict[str(count-1)]['species'].append({'code':point[5],'name':point[6],'lengths':[point[11]]})
+                                lastpoint=point
+                                                 
+                                                 
+                                                 
+                        
+                        
+
+                        #,'lengths':{'id':'','label':'','advLevel':'','advCauseDesc':'','advCause':'','popTypeID':'','popTypeDESC':''}
 
                 
                 if (sampledict != {}):
                         filedict[str(count)] = sampledict
-                        count=count+1   
+                        count=count+1
+                        
         
         return filedict
 
@@ -93,8 +108,8 @@ def createDict1(point):         #case for first line
         dict['waterBodyCode'] = point[0]
         dict['locName'] = point[1]
         dict['geometry'] = {'lat':(point[3]), 'lng':(point[4])}
-        dict['species'] = [{'code':point[5]},{'name':point[6]},{'lengths':{'id':'','label':'','advLevel':'','advCauseDesc':'','advCause':'','popTypeID':'','popTypeDESC':''}}]
-        dict['locDESC'] = ""
+        dict['species'] = [{'code':(point[5]),'name':point[6],'lengths':[point[11]]}]  #list of dicts, each dict contains a species, each species has a list of lengths
+        
         return dict
 
 def createDict(point,lastpoint,count):
@@ -111,7 +126,7 @@ def createDict(point,lastpoint,count):
                
                 #print filedict[str(count-1)]
                 return dict
-                #filedict[str(count-1)]['species'].append({'code':point[5],'name':point[6],'lengths':{'id':'','label':'','advLevel':'','advCauseDesc':'','advCause':'','popTypeID':'','popTypeDESC':''}})
+                #
                 
 
 
@@ -120,7 +135,7 @@ def createDict(point,lastpoint,count):
 # if yes then go to function to append values to dictionary
 # if no, create new dict
 filedict={}
-lastpoint = ""
+
 dict = {}
 fileContent = getLines('./data/FishGuide.txt')
 fileContent = splitLines(fileContent)

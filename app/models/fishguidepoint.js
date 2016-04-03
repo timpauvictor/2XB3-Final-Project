@@ -13,10 +13,10 @@ module.exports = mongoose.model('fishGuidePoint', {
 		code: {type: Number, default: 0},
 		name: {type: String, default: ' '},
 		lengths: [			
-			label: {type: String, default: ' '}				//just a list of strings, each string is of the form: "55-60cm"
+							
 		]
-	}],
-	locDESC: {type: String, default: ' '}
+	}]
+	//just a list of strings, each string is of the form: "55-60cm"
 	//defining anything else happens here, make sure you add a comma
 	//to the previous line if you're more attributes
 });

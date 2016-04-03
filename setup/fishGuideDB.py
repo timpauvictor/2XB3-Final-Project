@@ -142,4 +142,7 @@ fileContent = splitLines(fileContent)
 fileContent = fixLatLng(fileContent)
 ourdict = startDict(fileContent)
 #print ourdict[1]
-uniqueLocations = getNumUniqueLocations(fileContent)
+#uniqueLocations = getNumUniqueLocations(fileContent)
+import json
+with open('result.json', 'w') as fp:
+    json.dump(ourdict, fp)

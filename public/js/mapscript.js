@@ -62,8 +62,9 @@ function getFishPoints() {
 
 function plotFishPoints(points) { //identical to the earlier function
 	for (var i = 0; i < points.length; i++) {
-		var marker = L.marker([points[i].geometry.lat, points[i].geometry.lng]).addTo(__map);
-		makeFishPointPopup(points[i], marker); //except we make a popup for each one as opposed to having an onclick event
+		
+		var marker = L.marker([points[i.toString()].geometry.lat , points[i.toString()].geometry.lng]).addTo(__map);
+		makeFishPointPopup(points[i.toString()], marker); //except we make a popup for each one as opposed to having an onclick event
 		fishPoints.push(marker); //and we add it to a different array
 	}
 }

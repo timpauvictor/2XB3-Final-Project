@@ -16,7 +16,8 @@ mongoose.connect("mongodb://default:default@ds023398.mlab.com:23398/xb3-final-db
 
 //get all data of the body (post) parameters
 //parsing application/json
-app.use(bodyParser.json());
+app.use(bodyParser.json({limit: '50mb'}));
+app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
 
 // parse application/vnd.api+json as json
 app.use(bodyParser.json({ type: 'application/vnd.api+json' })); 

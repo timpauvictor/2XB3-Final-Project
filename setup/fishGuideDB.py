@@ -77,8 +77,8 @@ def startDict(fileContent):
                         lastpoint = point
                         sampledict['waterBodyCode'] = point[0]
                         sampledict['locName'] = point[1]
-                        sampledict['geometry'] = {'lat':(point[3]), 'lng':(point[4])}
-                        sampledict['species'] = [{'code':(point[5]),'name':point[6],'lengths':[point[11]]}]
+                        sampledict['geometry'] = {'lat':point[3], 'lng':point[4]}
+                        sampledict['species'] = [{'code':point[5],'name':point[6],'lengths':[point[11]]}]
                         
                 else:
                         if (point[5]==lastpoint[5]):                                            # if the fish ID are the same
@@ -107,27 +107,11 @@ def createDict1(point):         #case for first line
         dict = {}
         dict['waterBodyCode'] = point[0]
         dict['locName'] = point[1]
-        dict['geometry'] = {'lat':(point[3]), 'lng':(point[4])}
-        dict['species'] = [{'code':(point[5]),'name':point[6],'lengths':[point[11]]}]  #list of dicts, each dict contains a species, each species has a list of lengths
+        dict['geometry'] = {'lat':point[3], 'lng':point[4]}
+        dict['species'] = [{'code':point[5],'name':point[6],'lengths':[point[11]]}]  #list of dicts, each dict contains a species, each species has a list of lengths
         
         return dict
 
-def createDict(point,lastpoint,count):
-        dict={}
-        if (point[1] != lastpoint):  # if waterbody id is different from last one
-                        lastpoint = point
-                        dict['waterBodyCode'] = point[0]
-                        dict['locName'] = point[1]
-                        dict['geometry'] = {'lat':(point[3]), 'lng':(point[4])}
-                        dict['species'] = [{'code':(point[5]),'name':point[6],'lengths':[point[11]]}]
-                        dict['locDESC'] = ""
-                        return dict
-        else:
-               
-                #print filedict[str(count-1)]
-                return dict
-                #
-                
 
 
 
@@ -144,5 +128,7 @@ ourdict = startDict(fileContent)
 #print ourdict[1]
 #uniqueLocations = getNumUniqueLocations(fileContent)
 import json
-with open('result.json', 'w') as fp:
-    json.dump(ourdict, fp)
+import requests
+r = requests.post('http://localhost:8080/api/fishPoints',data=ourdict)
+# with open('result.json', 'w') as fp:
+    # json.dump(ourdict, fp)

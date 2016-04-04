@@ -31,6 +31,8 @@ var redIcon = new L.Icon({
   popupAnchor: [1, -34],
   shadowSize: [41, 41]
 });
+var myTable = document.getElementById('dataTable').getElementsByTagName('tbody')[0];
+var listData = [{}];
 
 function loadMap() {                                         // initial function to load our map in to the div
 	__map = L.map("map").setView(__startingCoords, __zoomLevel); // inits a map with the given start coords and
@@ -77,9 +79,49 @@ function getFishPoints() {
 	});
 	var realPromise = Promise.resolve(jQueryPromise);
 	realPromise.then(function(val) {
-		console.log(val);
+		// console.log(val);
 		plotFishPoints(val);
+		addToList(val);
 	});
+}
+
+
+
+function zoomLocCode(code) {
+	console.log("Attempting to find a matching piece of data for code:" + code);
+	var jQueryPromise = $.post("http://localhost:8080/api/fishPointCode", {
+		"code": code
+	});
+	var realPromise = Promise.resolve(jQueryPromise);
+	realPromise.then(function(val) {
+		console.log("Match found");
+		__map.setView([Number(val.lat), Number(val.lng)], 15);
+		popPopup(val.lat, val.lng);
+	});
+}
+
+function popPopup(lat, lng) {
+	for (var i = 0; i < fishPoints.length; i++) {
+		if (fishPoints[i]._latlng.lat === Number(lat) && fishPoints[i]._latlng.lng === Number(lng)) {
+			console.log("matched popup");
+			fishPoints[i].openPopup();
+			return;
+		}
+	}
+}
+
+function addToList(points) {
+	for (var i = 0; i < points.length; i++) {
+		insertRow(points[i].waterBodyCode, points[i].locName, makeSpeciesArr(points[i].species))
+	}
+}
+
+function makeSpeciesArr(specs) {
+	toReturn = []
+	for (var i = 0; i < specs.length; i++) {
+		toReturn.push(specs[i].name);
+	}
+	return toReturn;
 }
 
 function plotFishPoints(points) { //identical to the earlier function
@@ -113,6 +155,40 @@ function prettySpecies(species) {                                         // fun
 function displayFishClusters() {
 	__map.addLayer(fishClusters);
 	// __map.removeLayer(fishClusters);
+}
+
+function insertRow(code, locName, species) {
+	var newRow = myTable.insertRow(myTable.rows.length);
+
+	var link = document.createElement('a');
+	link.setAttribute('href', 'javascript:zoomLocCode(' + code + ')');
+
+	var newCell = newRow.insertCell(0);
+	link.appendChild(document.createTextNode(code));
+	newCell.appendChild(link);
+
+	newCell = newRow.insertCell(1);
+	var newText = document.createTextNode(locName);
+	newCell.appendChild(newText);
+
+	newCell = newRow.insertCell(2);
+	var toAdd = "";
+	for (var i = 0; i < species.length; i++) {
+		toAdd += species[i] + ", "
+	}
+	newText = document.createTextNode(toAdd);
+	newCell.appendChild(newText);
+
+	addData(code, locName, species);
+}
+
+
+function addData(code, locName, species) {
+	listData[listData.length] = {
+		"code": code,
+		"name": locName,
+		"specs": species
+	}
 }
 
 loadMap();        // call load map

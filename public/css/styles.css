@@ -8,6 +8,10 @@
 	
 }
 
+table {
+    width: 30%;
+}
+
 .black_overlay {
     display: none;
     position: absolute;

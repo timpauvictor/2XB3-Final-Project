@@ -42,6 +42,23 @@ module.exports = function(app) {
 		});
 	});
 
+	app.post('/api/fishPointCode', function(req, res) {
+		console.log("Looking for fishPoint with code: " + req.body.code);
+		fishPoint.find(function(err, resPoint) {
+			if (err) {
+				res.send(err);
+			}
+			for (var i = 0; i < resPoint.length; i++) {
+				// console.log(resPoint);
+				if (req.body.code === resPoint[i].waterBodyCode) {
+					console.log("Match found");
+					res.send(resPoint[i].geometry);
+					break;			
+				}
+			}	
+		});
+	});
+
 	app.post('/api/waterPoints', function(req, res) {
 		console.log("Recieved request to add a waterPoint")
 		var newWaterPoint = waterPoint(req.body);

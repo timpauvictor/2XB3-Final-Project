@@ -5,10 +5,10 @@
     <link rel="stylesheet" href="https://code.getmdl.io/1.1.2/material.indigo-pink.min.css">
     <script defer src="https://code.getmdl.io/1.1.2/material.min.js"></script>
     <!-- Load Leaflet from CDN-->
-    <link href="https://leafletjs-cdn.s3.amazonaws.com/content/leaflet/master/leaflet.css" rel="stylesheet" type="text/css" />
-    <script src="https://leafletjs-cdn.s3.amazonaws.com/content/leaflet/master/leaflet.js"></script>
+    <link rel="stylesheet" href="./css/leaflet.css" />
+    <script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
     <!-- Load Esri Leaflet from CDN -->
-    <script src="https://cdn.jsdelivr.net/leaflet.esri/2.0.0-beta.8/esri-leaflet.js"></script>
+    <script src="https://cdn.jsdelivr.net/leaflet.esri/1.0.3/esri-leaflet.js"></script>
     <!-- Load jQuery from CDN -->
     <script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
     <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
@@ -17,7 +17,9 @@
     <!--Load google charts API-->
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <!-- Load marker clustering plugin for Leaflet -->
-    <script src="https://cdn.jsdelivr.net/leaflet.esri.clustered-feature-layer/2.0.0-beta.1/esri-leaflet-clustered-feature-layer.js"></script>
+    <link rel="stylesheet" href="./css/MarkerCluster.css" />
+    <link rel="stylesheet" href="./css/MarkerCluster.Default.css" />
+    <script src="./js/leaflet.markercluster-src.js"></script>
 
 <body>
     <div id="light" class="white_content"><span class="closeButton"><a href = "javascript:void(0)" onclick = "document.getElementById('light').style.display='none';document.getElementById('fade').style.display='none'">Close</a></span>
@@ -33,15 +35,15 @@
                 <!-- Add spacer, to align navigation to the right -->
                 <div class="mdl-layout-spacer"></div>
                 <!-- Navigation. We hide it in small screens. -->
-                <nav class="mdl-navigation mdl-layout--large-screen-only">
+                <!-- <nav class="mdl-navigation mdl-layout--large-screen-only">
                     <a class="mdl-navigation__link" href="">Link</a>
                     <a class="mdl-navigation__link" href="">Link</a>
                     <a class="mdl-navigation__link" href="">Link</a>
                     <a class="mdl-navigation__link" href="">Link</a>
-                </nav>
+                </nav> -->
             </div>
         </header>
-        <div class="mdl-layout__drawer">
+        <!-- <div class="mdl-layout__drawer">
             <span class="mdl-layout-title">Title</span>
             <nav class="mdl-navigation">
                 <a class="mdl-navigation__link" href="">Link</a>
@@ -49,18 +51,17 @@
                 <a class="mdl-navigation__link" href="">Link</a>
                 <a class="mdl-navigation__link" href="">Link</a>
             </nav>
-        </div>
+        </div> -->
         <main class="mdl-layout__content">
             <div class="page-content">
                 <div id="map" style="position: absolute; top: 0; bottom: 0; left: 0; right: 0; width: 80%">
                 </div>
-                <div id="list" style="position: absolute; top: 0; bottom: 0; left: 80%; right: 0">
+                <div id="list" style="position: absolute; top: 0; bottom: 0; left: 81%; right: 0; width: 100%">
                     <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
                         <thead>
                             <tr>
                                 <th class="mdl-data-table__cell--non-numeric">Location Code</th>
                                 <th>Location</th>
-                                <th>Species Code</th>
                                 <th>Species</th>
                             </tr>
                         </thead>

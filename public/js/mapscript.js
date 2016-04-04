@@ -1,15 +1,42 @@
-var __zoomLevel = 4;          // the amount of zoom we're at
+var __zoomLevel = 6;          // the amount of zoom we're at
 var fishPoints = [];          // an array to store all fish points, this is used for toggling them on and off
-var __startingCoords = [52.8834037, -108.4173503]
+var __startingCoords = [51.2538, -85.3232]
 var __map;
 var waterPoints = [];
-var fishClusters = L.esri.ClusteredFeatureLayer;
+var fishClusters = L.markerClusterGroup({
+	disableClusteringAtZoom: 10
+});
+var waterClusters = L.markerClusterGroup({
+	disableClusteringAtZoom: 10,
+	iconCreateFunction: function(cluster) { //we override the original function so we can set up custom css rules
+		var childCount = cluster.getChildCount();
+
+		var c = ' marker-cluster-';
+		if (childCount < 10) {
+			c += 'small-water';
+		} else if (childCount < 100) {
+			c += 'medium-water';
+		} else {
+			c += 'large-water';
+		}
+
+		return new L.DivIcon({ html: '<div><span>' + childCount + '</span></div>', className: 'marker-cluster' + c, iconSize: new L.Point(40, 40) });
+	}
+});
+var redIcon = new L.Icon({
+  iconUrl: 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-red.png',
+  shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/images/marker-shadow.png',
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  shadowSize: [41, 41]
+});
 
 function loadMap() {                                         // initial function to load our map in to the div
-__map = L.map("map").setView(__startingCoords, __zoomLevel); // inits a map with the given start coords and
-console.log('map created');                                  // console log that we've created a map
-L.esri.basemapLayer("Topographic").addTo(__map);             // load up esri's tile layers, in this case it's called "topographic"
-console.log('topographic layer added');                      // log to the console that this has been done
+	__map = L.map("map").setView(__startingCoords, __zoomLevel); // inits a map with the given start coords and
+	console.log('map created');                                  // console log that we've created a map
+	L.esri.basemapLayer("Topographic").addTo(__map);             // load up esri's tile layers, in this case it's called "topographic"
+	console.log('topographic layer added');                     // log to the console that this has been done
 }
 
 function getWaterPoints() { //function that makes a get request for all of our water points
@@ -24,14 +51,6 @@ function getWaterPoints() { //function that makes a get request for all of our w
 	});
 }
 
-function plotWaterPoints(points) { //a function which makes the maekrs for all the points we got
-	for (var i = 0; i < points.length; i++) { //iterate through all the points
-		var marker = L.marker([points[i].geometry.lat, points[i].geometry.lng]).addTo(__map); //for each one, get it's latitude and longitude and plot it
-		marker.on('click', waterClick); //make a new event listener for our marker such that whenever it is clicked, it calls the function waterClick, it sends an event object as arguments (e)
-		waterPoints.push(marker); //push the new marker we made into our array of water points
-	}
-}
-
 function waterClick(e) { //function to handle any clicks on a waterPoint
 	//console.log("water point clicked");
 	//console.log([e.latlng.lat, e.latlng.lng]);
@@ -43,7 +62,7 @@ function waterClick(e) { //function to handle any clicks on a waterPoint
 
 function plotWaterPoints(points) {
 	for (var i = 0; i < points.length; i++) {
-		var marker = L.marker([points[i].geometry.lat, points[i].geometry.lng]).addTo(__map);
+		var marker = L.marker([points[i].geometry.lat, points[i].geometry.lng], {icon: redIcon}).addTo(__map);
 		// console.log(points[i].stationCode);
 		// marker.bindPopup(points[i].stationCode);
 		marker.on('click', waterClick);
@@ -59,15 +78,16 @@ function getFishPoints() {
 	var realPromise = Promise.resolve(jQueryPromise);
 	realPromise.then(function(val) {
 		console.log(val);
-		// plotFishPoints(val);
+		plotFishPoints(val);
 	});
 }
 
 function plotFishPoints(points) { //identical to the earlier function
 	for (var i = 0; i < points.length; i++) {
-		var marker = L.marker([points[i].geometry.lat, points[i].geometry.lng]).addTo(__map);
+		var marker = L.marker([points[i].geometry.lat, points[i].geometry.lng]);
 		makeFishPointPopup(points[i], marker); //except we make a popup for each one as opposed to having an onclick event
 		fishPoints.push(marker); //and we add it to a different array
+		fishClusters.addLayer(marker); //add it to our clusters
 	}
 }
 
@@ -84,14 +104,20 @@ function prettySpecies(species) {                                         // fun
     stringToReturn += "<li>" + species[i].name + "</li>";                     // add the species name to the list
     for (var j = 0; j < species[i].lengths.length; j++) {                    // parse through all of the lengths for the species
       stringToReturn += "<ul><li>" + species[i].lengths[j] + "</li></ul>"; // add the lengths to the string
-		}
 	}
 		stringToReturn += "</ul></ul>" //finish off the last tables
 		return stringToReturn; //return it
+	}
+}
+
+function displayFishClusters() {
+	__map.addLayer(fishClusters);
+	// __map.removeLayer(fishClusters);
 }
 
 loadMap();        // call load map
 getFishPoints();  // get our fish points and plot them
 getWaterPoints(); // get our water points and plot them
+displayFishClusters();
 
 

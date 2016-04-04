@@ -8,7 +8,10 @@
         ALL the entries are in this format
 """
 
-import shlex #if we import this, it'll split on whitespace
+import requests
+import shlex #if we import this, we can split on whitespace
+import json
+# import urllib
 #while keeping quotes intact (which is exactly what we need)
 def getLines(fileName): #this function simply makes an array of all the lines in the file
         with open(fileName) as openedFile: #open our file
@@ -128,6 +131,21 @@ def createDict(point,lastpoint,count):
                 return dict
                 #
                 
+def makePostReqs(rawData):
+    postURL = "http://localhost:8080/api/fishPoints"
+    headers = {
+            'content-type': "application/json",
+            'cache-control': "no-cache"
+    }
+
+    print(len(rawData))
+
+    for i in range(len(rawData)):
+        print(i)
+        payload = json.dumps(rawData[str(i)])
+        jsonReply = requests.request("POST", postURL, data=payload, headers=headers)
+        print(jsonReply)
+    print("Done!")
 
 
 
@@ -141,5 +159,5 @@ fileContent = getLines('./data/FishGuide.txt')
 fileContent = splitLines(fileContent)
 fileContent = fixLatLng(fileContent)
 ourdict = startDict(fileContent)
-#print ourdict[1]
-uniqueLocations = getNumUniqueLocations(fileContent)
+
+makePostReqs(ourdict);

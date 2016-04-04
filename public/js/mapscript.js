@@ -3,6 +3,7 @@ var fishPoints = [];          // an array to store all fish points, this is used
 var __startingCoords = [52.8834037, -108.4173503]
 var __map;
 var waterPoints = [];
+var fishClusters = L.esri.ClusteredFeatureLayer;
 
 function loadMap() {                                         // initial function to load our map in to the div
 __map = L.map("map").setView(__startingCoords, __zoomLevel); // inits a map with the given start coords and
@@ -18,6 +19,7 @@ function getWaterPoints() { //function that makes a get request for all of our w
 	});
 	var realPromise = Promise.resolve(jQueryPromise); //realPromise is another variable that gets created with a trigger on when the problem resolves
 	realPromise.then(function(val) { //when it gets triggered
+		// console.log(val);
 		plotWaterPoints(val); //call a new function to place the points on the map
 	});
 }
@@ -56,7 +58,8 @@ function getFishPoints() {
 	});
 	var realPromise = Promise.resolve(jQueryPromise);
 	realPromise.then(function(val) {
-		plotFishPoints(val);
+		console.log(val);
+		// plotFishPoints(val);
 	});
 }
 
@@ -70,8 +73,7 @@ function plotFishPoints(points) { //identical to the earlier function
 
 function makeFishPointPopup(point, marker) { //function to make the popup for a given marker and point
 	var string = ""; //new empty string
-	string = "<b>Name: </b>" 				+ point.locName 				        + "<br>" 
-		+ 	"<b>Description: </b>" 		+ point.locDESC 				+ "<br>"
+	string = "<b>Name: </b>" 				+ point.locName				+ "<br>"
 		+ 	"<b>Species: </b>" 			  + prettySpecies(point.species); + "<br>"; //adds the name, description and species located there to the popup
 	marker.bindPopup(string);//make a new popup for our marker with the string we just made
 }
@@ -80,8 +82,8 @@ function prettySpecies(species) {                                         // fun
   var stringToReturn = "<ul>";                                              // initially start a list in html
    for (var i = 0; i < species.length; i++) {                                // parse through the species
     stringToReturn += "<li>" + species[i].name + "</li>";                     // add the species name to the list
-    for (var j = 0; j < species[i].lengths.length; j++) {                     // parse through all of the lengths for the species
-      stringToReturn += "<ul><li>" + species[i].lengths[j].label + "</li></ul>"; // add the lengths to the string
+    for (var j = 0; j < species[i].lengths.length; j++) {                    // parse through all of the lengths for the species
+      stringToReturn += "<ul><li>" + species[i].lengths[j] + "</li></ul>"; // add the lengths to the string
 		}
 	}
 		stringToReturn += "</ul></ul>" //finish off the last tables

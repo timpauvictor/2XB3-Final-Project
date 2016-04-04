@@ -4,7 +4,6 @@ var waterPoint = require('./models/waterpoint.js');
 module.exports = function(app) {
 
 	//server routes to handle api calls
-	//authentication routes=====================================
 	app.get('/api/fishPoints', function(req, res) {
 		console.log('Received request for all fishPoints');
 		fishPoint.find(function(err, resPoint) {
@@ -18,6 +17,7 @@ module.exports = function(app) {
 
 	app.post('/api/fishPoints', function(req, res) {
 		console.log('Received request to add a fishPoint');
+		console.log(req.body);
 		var newfishPoint = fishPoint(req.body);
 		newfishPoint.save(function(err) {
 			if (err) throw (err);

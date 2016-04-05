@@ -4,7 +4,7 @@ def getLines(fileName): #this function simply makes an array of all the lines in
         return fileContent
 
 def splitCSV(myArr):
-	for i in range(2, len(myArr)):
+	for i in range(len(myArr)):
 		myArr[i] = myArr[i].split(",")
 	return myArr
 
@@ -21,10 +21,45 @@ def splitCSV(myArr):
 stationList = getLines("./data/hydrometric_StationList.csv")
 stationList.pop(0) # popping to remove the header
 stationList = splitCSV(stationList)
-print(stationList[0])
+#print(stationList[0][0])
+
+
+
+def startDict(inputlist):
+	stationDict = {}
+	for i in range(len(inputlist)):
+		stationDict[inputlist[i][0]] = createDict(inputlist[i]) # each dict entry is its ID
+	return stationDict
+
+def createDict(waterstation):
+	waterDict= {}
+	waterDict['stationCode'] = waterstation[0]
+	waterDict['stationLoc'] = waterstation[1]
+	waterDict['geometry'] = {'lat':waterstation[2],'lng':waterstation[3]}
+	waterDict['dailyDischarge'] = ""
+	waterDict['dailyLevels'] = ""
+	return waterDict
+		
+
+def attachHydroData(inputlist, stationDict):
+	for i in range(len(inputlist)):
+		ID = inputlist[i][0] #Id of station		
+		stationDict[ID]['dailyLevels'] = inputlist[i][2]
+		stationDict[ID]['dailyDischarge'] = inputlist[i][6]
+		
+def fixDictIndices(inputDict,inputlist):
+	fixedDict = {}
+	for i in range(len(inputlist)):
+		fixedDict[str(i)] = inputDict[inputlist[i][0]]
+	return fixedDict
+	
 rawData = getLines("./data/ON_hourly_hydrometric.csv")
 rawData.pop(0)
 rawData = splitCSV(rawData)
+ourdict = startDict(stationList)
+attachHydroData(rawData,ourdict)
+ourdict = fixDictIndices(ourdict,stationList)
+print(ourdict['0'])
 
 
 

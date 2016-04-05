@@ -38,16 +38,16 @@ def createDict(waterstation):
 	waterDict['stationCode'] = waterstation[0]
 	waterDict['stationLoc'] = waterstation[1]
 	waterDict['geometry'] = {'lat':waterstation[2],'lng':waterstation[3]}
-	waterDict['dailyDischarge'] = ""
-	waterDict['dailyLevels'] = ""
+	waterDict['dailyDischarge'] = []
+	waterDict['dailyLevels'] = []
 	return waterDict
 		
 
 def attachHydroData(inputlist, stationDict):
 	for i in range(len(inputlist)):
 		ID = inputlist[i][0] #Id of station		
-		stationDict[ID]['dailyLevels'] = inputlist[i][2]
-		stationDict[ID]['dailyDischarge'] = inputlist[i][6]
+		stationDict[ID]['dailyLevels'].append(inputlist[i][2])
+		stationDict[ID]['dailyDischarge'].append(inputlist[i][6])
 		
 def fixDictIndices(inputDict,inputlist):
 	fixedDict = {}
@@ -62,14 +62,14 @@ def makePostReqs(rawData):
             'cache-control': "no-cache"
     }
 
-    print(len(rawData))
+    #print(len(rawData))
 
     for i in range(len(rawData)):
-        print(i)
+        #print(i)
         payload = json.dumps(rawData[str(i)])
         jsonReply = requests.request("POST", postURL, data=payload, headers=headers)
-        print(jsonReply)
-    print("Done!")
+        #print(jsonReply)
+    #print("Done!")
 	
 rawData = getLines("./data/ON_hourly_hydrometric.csv")
 rawData.pop(0)
@@ -77,8 +77,9 @@ rawData = splitCSV(rawData)
 ourdict = startDict(stationList)
 attachHydroData(rawData,ourdict)
 ourdict = fixDictIndices(ourdict,stationList)
-makePostReqs(ourdict)
-print(ourdict['0'])
+print(ourdict['94']['dailyLevels'])
+#makePostReqs(ourdict)
+
 
 
 

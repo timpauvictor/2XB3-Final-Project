@@ -139,18 +139,24 @@ function makeFishPointPopup(point, marker) { //function to make the popup for a 
 	string = "<b>Name: </b>" 				+ point.locName				+ "<br>"
 		+ 	"<b>Species: </b>" 			  + prettySpecies(point.species); + "<br>"; //adds the name, description and species located there to the popup
 	marker.bindPopup(string);//make a new popup for our marker with the string we just made
+	// console.log(string);
 }
 
 function prettySpecies(species) {                                         // function to print the species all pretty
+	// console.log(species);
   var stringToReturn = "<ul>";                                              // initially start a list in html
    for (var i = 0; i < species.length; i++) {                                // parse through the species
+   	// console.log(species)
+   	// console.log(i)
     stringToReturn += "<li>" + species[i].name + "</li>";                     // add the species name to the list
+    // console.log(species[i].name);
     for (var j = 0; j < species[i].lengths.length; j++) {                    // parse through all of the lengths for the species
+    	// console.log(j);
       stringToReturn += "<ul><li>" + species[i].lengths[j] + "</li></ul>"; // add the lengths to the string
 	}
-		stringToReturn += "</ul></ul>" //finish off the last tables
-		return stringToReturn; //return it
 	}
+	stringToReturn += "</ul></ul>" //finish off the last tables
+	return stringToReturn; //return it
 }
 
 function displayFishClusters() {

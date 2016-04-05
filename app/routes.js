@@ -4,7 +4,6 @@ var waterPoint = require('./models/waterpoint.js');
 module.exports = function(app) {
 
 	//server routes to handle api calls
-	//authentication routes=====================================
 	app.get('/api/fishPoints', function(req, res) {
 		console.log('Received request for all fishPoints');
 		fishPoint.find(function(err, resPoint) {
@@ -18,6 +17,7 @@ module.exports = function(app) {
 
 	app.post('/api/fishPoints', function(req, res) {
 		console.log('Received request to add a fishPoint');
+		console.log(req.body);
 		var newfishPoint = fishPoint(req.body);
 		newfishPoint.save(function(err) {
 			if (err) throw (err);
@@ -37,6 +37,23 @@ module.exports = function(app) {
 				if ((Number(req.body.lat) === resPoint[i].geometry.lat) && (Number(req.body.lng) === resPoint[i].geometry.lng)) {
 					console.log("Match found");
 					res.send(resPoint[i]);					
+				}
+			}	
+		});
+	});
+
+	app.post('/api/fishPointCode', function(req, res) {
+		console.log("Looking for fishPoint with code: " + req.body.code);
+		fishPoint.find(function(err, resPoint) {
+			if (err) {
+				res.send(err);
+			}
+			for (var i = 0; i < resPoint.length; i++) {
+				// console.log(resPoint);
+				if (req.body.code === resPoint[i].waterBodyCode) {
+					console.log("Match found");
+					res.send(resPoint[i].geometry);
+					break;			
 				}
 			}	
 		});

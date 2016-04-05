@@ -64,7 +64,8 @@ function waterClick(e) { //function to handle any clicks on a waterPoint
 
 function plotWaterPoints(points) {
 	for (var i = 0; i < points.length; i++) {
-		var marker = L.marker([points[i].geometry.lat, points[i].geometry.lng], {icon: redIcon}).addTo(__map);
+		var marker = L.marker([points[i].geometry.lat, points[i].geometry.lng], {icon: redIcon});
+		waterClusters.addLayer(marker);
 		// console.log(points[i].stationCode);
 		// marker.bindPopup(points[i].stationCode);
 		marker.on('click', waterClick);
@@ -191,9 +192,14 @@ function addData(code, locName, species) {
 	}
 }
 
+function displayWaterClusters() {
+	__map.addLayer(waterClusters);
+}
+
 loadMap();        // call load map
 getFishPoints();  // get our fish points and plot them
 getWaterPoints(); // get our water points and plot them
 displayFishClusters();
+displayWaterClusters();
 
 

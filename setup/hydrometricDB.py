@@ -65,11 +65,11 @@ def makePostReqs(rawData):
     #print(len(rawData))
 
     for i in range(len(rawData)):
-        #print(i)
+        print(i)
         payload = json.dumps(rawData[str(i)])
         jsonReply = requests.request("POST", postURL, data=payload, headers=headers)
         #print(jsonReply)
-    #print("Done!")
+    print("Done!")
 	
 rawData = getLines("./data/ON_hourly_hydrometric.csv")
 rawData.pop(0)
@@ -78,7 +78,7 @@ ourdict = startDict(stationList)
 attachHydroData(rawData,ourdict)
 ourdict = fixDictIndices(ourdict,stationList)
 print(ourdict['94']['dailyLevels'])
-#makePostReqs(ourdict)
+makePostReqs(ourdict)
 
 
 

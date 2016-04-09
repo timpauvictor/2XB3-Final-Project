@@ -1,5 +1,6 @@
 var fishPoint = require('./models/fishguidepoint.js');
 var waterPoint = require('./models/waterpoint.js');
+//var diGraph = require('./models/Digraph.js');
 
 module.exports = function(app) {
 
@@ -69,6 +70,17 @@ module.exports = function(app) {
 		})
 		console.log('Request fulfilled');
 	});
+	
+/* 	app.post('/api/diGraph', function(req, res) {
+		console.log("Recieved request to add a Graph")
+		var newdiGraph = diGraph(req.body);
+		newdiGraph.save(function(err) {
+			if (err) throw (err);
+			console.log('New diGraph made');
+			res.send('Success');
+		})
+		console.log('Request fulfilled');
+	}); */
 
 	app.get('/api/waterPoints', function (req, res) {
 		console.log("Received request for all waterPoints");

@@ -52,6 +52,7 @@ function DSP(graph, source){
         return path;
     }
 	
-	    function hasPathTo(v) {
+	function hasPathTo(v) {
 			return distTo[v] < Infinity;
     }
+DSP()

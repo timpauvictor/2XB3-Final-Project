@@ -38,7 +38,7 @@ function createGraph(points){
 		for (var j = 0; j < points.length; j++) {		//loop through all points
 			if(i !=j){									//don't create self loops
 			var edgeweight = haverSine(points[i].lat,points[i].lng,points[j].lat,points[j].lng);
-			var edge = {'to':j, 'weight':weight}	;						//create an edge to the given node
+			var edge = {'from': i,'to':j, 'weight':edgeweight}	;						//create an edge to the given node
 			adjlist.push(edge);
 			}
 		}

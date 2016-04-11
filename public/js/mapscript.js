@@ -82,7 +82,7 @@ function getFishPoints() {
 	realPromise.then(function(val) {
 		// console.log(val);
 		plotFishPoints(val);
-		addToList(val);
+		addRawToList(val);
 	});
 }
 
@@ -111,9 +111,15 @@ function popPopup(lat, lng) {
 	}
 }
 
-function addToList(points) {
+function addRawToList(points) {
 	for (var i = 0; i < points.length; i++) {
 		insertRow(points[i].waterBodyCode, points[i].locName, makeSpeciesArr(points[i].species))
+	}
+}
+
+function addSortedToList(points) {
+	for (var i = 0; i < points.length; i++) {
+		insertRow(points[i].code, points[i].name, points[i].specs);
 	}
 }
 
@@ -192,7 +198,7 @@ function insertRow(code, locName, species) {
 
 function addData(code, locName, species) {
 	listData[listData.length] = {
-		"code": code,
+		"code": parseInt(code),
 		"name": locName,
 		"specs": species
 	}
@@ -200,6 +206,32 @@ function addData(code, locName, species) {
 
 function displayWaterClusters() {
 	__map.addLayer(waterClusters);
+}
+
+function sortLocCode() {
+	// console.log(listData);
+	var clonedArray = listData;
+	console.log("Requesting sorted list of data");
+	var jQueryPromise = $.get("http://localhost:8080/api/sortListData", {
+		dataType: "jsonp"
+	});
+	var realPromise = Promise.resolve(jQueryPromise);
+	realPromise.then(function(val) {
+		console.log("Response recieved");
+		myTable.innerHTML = "";
+		console.log(val)
+		addSortedToList(val);
+	});
+}
+
+function searchStart(term, type) {
+	if (type == "id") {
+
+	} else if (type == "fishType") {
+
+	} else if (type == "Location") {
+
+	}
 }
 
 loadMap();        // call load map

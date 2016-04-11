@@ -30,7 +30,8 @@ stationList = splitCSV(stationList)
 def startDict(inputlist):
 	stationDict = {}
 	for i in range(len(inputlist)):
-		stationDict[inputlist[i][0]] = createDict(inputlist[i]) # each dict entry is its ID
+		if (inputlist[i][4] == "ON"):
+			stationDict[inputlist[i][0]] = createDict(inputlist[i]) # each dict entry is its ID
 	return stationDict
 
 def createDict(waterstation):

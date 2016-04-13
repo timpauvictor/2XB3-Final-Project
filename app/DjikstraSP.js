@@ -5,7 +5,7 @@ var pq = [];
 
 
 module.exports = {
-    DSP: function(graph, source) {
+    DSP: function(graph, s) {
         for (var v = 0; v < graph.nodes.length; v++){
             distTo[v] = Infinity;
         }
@@ -23,6 +23,7 @@ module.exports = {
     },
 
     pathTo: function(v) {
+        console.log(v)
         if (!hasPathTo(v)){
             return null;
         }

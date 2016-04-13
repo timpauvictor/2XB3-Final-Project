@@ -15,15 +15,16 @@ var graph = {
 
 module.exports = {
 	createGraph: function(points) {
-		console.log("creating graph");
+		console.log("creating graph...");
 		for (var i = 0; i < points.length; i++) {
 			var node = {'name': points[i].locName,'lat':points[i].geometry.lat, 'lng': points[i].geometry.lng};
 			graph.nodes.push(node)
 		}
 		for (var i = 0; i < points.length; i++) {			//for each point
-			console.log("working");
+			
 			var adjlist = [];								//create an adjlist
 			for (var j = 0; j < points.length; j++) {		//loop through all points
+				// console.log(i, j);
 				if(i !=j){									//don't create self loops
 					// console.log(points[i]);
 					// console.log(points[i].geometry.lat,points[i].geometry.lng,points[j].geometry.lat,points[j].geometry.lng);
@@ -33,10 +34,10 @@ module.exports = {
 					adjlist.push(edge);
 				}
 			}
-			console.log(adjlist);
+			// console.log(adjlist);
 			graph.edges.push(adjlist);						//add each node's adjlist to edges array in graph
 		}
-		console.log(graph);
+		// console.log(graph);
 		return graph;
 	}
 }
@@ -80,7 +81,7 @@ function toRad(Value) {
 }
 
 function haverSine(lat1,lon1,lat2,lon2){
-	console.log(lat1,lon1,lat2,lon2);
+	// console.log(lat1,lon1,lat2,lon2);
 	var R = 6371;
 	var x1 = lat2-lat1;
 	var dLat = toRad(x1);  

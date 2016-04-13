@@ -136,13 +136,16 @@ module.exports = function(app) {
 				res.send(err);
 			}
 			graph = diGraph.createGraph(resPoint);
-			// console.log(graph);
-
-
-			// var json = require('json');
-			var fs = require('fs');
-			fs.writeFileSync('./data.json', JSON.stringify(graph) , 'utf-8');
+			console.log("Graph Finished");
+			res.send("Success");
 		})
+	})
+
+	app.post('/api/getPath', function(req, res) {
+		console.log(req.body);
+		console.log("Looking for path from " + req.body.from);
+		sp.DSP(graph, Number(req.body.from));
+		console.log(sp.pathTo(Number(req.body.to)));
 	})
 
 	//frontend routes===========================================

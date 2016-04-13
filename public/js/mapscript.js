@@ -33,6 +33,7 @@ var redIcon = new L.Icon({
 });
 var myTable = document.getElementById('dataTable').getElementsByTagName('tbody')[0];
 var listData = [{}];
+var listCounter = 0;
 
 function loadMap() {                                         // initial function to load our map in to the div
 	__map = L.map("map").setView(__startingCoords, __zoomLevel); // inits a map with the given start coords and
@@ -177,7 +178,7 @@ function insertRow(code, locName, species) {
 	link.setAttribute('href', 'javascript:zoomLocCode(' + code + ')');
 
 	var newCell = newRow.insertCell(0);
-	link.appendChild(document.createTextNode(code));
+	link.appendChild(document.createTextNode(listCounter + ". " + code));
 	newCell.appendChild(link);
 
 	newCell = newRow.insertCell(1);
@@ -192,12 +193,14 @@ function insertRow(code, locName, species) {
 	newText = document.createTextNode(toAdd);
 	newCell.appendChild(newText);
 
-	addData(code, locName, species);
+	addData(listCounter, code, locName, species);
+	listCounter++;
 }
 
 
-function addData(code, locName, species) {
+function addData(listCounter, code, locName, species) {
 	listData[listData.length] = {
+		"counter": listCounter,
 		"code": parseInt(code),
 		"name": locName,
 		"specs": species
@@ -222,16 +225,6 @@ function sortLocCode() {
 		console.log(val)
 		addSortedToList(val);
 	});
-}
-
-function searchStart(term, type) {
-	if (type == "id") {
-
-	} else if (type == "fishType") {
-
-	} else if (type == "Location") {
-
-	}
 }
 
 loadMap();        // call load map

@@ -26,25 +26,29 @@
         <div id="inner-light"></div>
     </div>
     <div id="fade" class="black_overlay"></div>
-
     <div id="plannerDiv" class="white_content"><span class="closeButton"><a href = "javascript:void(0)" onclick = "document.getElementById('plannerDiv').style.display='none';document.getElementById('fade').style.display='none'">Close</a></span>
         <div id="inner-light">
             <form action="#">
-              <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                <input class="mdl-textfield__input" type="text" id="startSpot">
-                <label class="mdl-textfield__label" for="startSpot">Starting Point</label>
-              </div>
+                <p>You'll have to enter the code for the location as it is written on the side before sorting, for example for "4. 45428204" you would enter '4'</p>
+                <p>Please make sure node has finished making the graph before pressing go, wait for "Graph Finished"</p>
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    <input class="mdl-textfield__input" type="text" id="startSpot">
+                    <label class="mdl-textfield__label" for="startSpot">Starting Point Code (before sort)</label>
+                </div>
             </form>
             <p>to...</p>
             <form action="#">
-              <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                <input class="mdl-textfield__input" type="text" id="destSpot">
-                <label class="mdl-textfield__label" for="destSpot">Destination</label>
-              </div>
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    <input class="mdl-textfield__input" type="text" id="destSpot">
+                    <label class="mdl-textfield__label" for="destSpot">Destination Point Code (before sort)</label>
+                </div>
             </form>
+
+            <button class="mdl-button mdl-js-button mdl-button--raised" onclick="goPlannerClick()">
+                Go!
+            </button>
         </div>
     </div>
-
     <!-- Always shows a header, even in smaller screens. -->
     <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
         <header class="mdl-layout__header">
@@ -84,7 +88,6 @@
                             </tr>
                         </thead>
                         <tbody>
-
                         </tbody>
                     </table>
                 </div>
@@ -96,4 +99,5 @@
     </div>
     <!-- <script src="js/scripts.js"></script> -->
 </body>
+
 </html>

@@ -19,12 +19,32 @@
     <link rel="stylesheet" href="./css/MarkerCluster.css" />
     <link rel="stylesheet" href="./css/MarkerCluster.Default.css" />
     <script src="./js/leaflet.markercluster-src.js"></script>
+</head>
 
 <body>
     <div id="light" class="white_content"><span class="closeButton"><a href = "javascript:void(0)" onclick = "document.getElementById('light').style.display='none';document.getElementById('fade').style.display='none'">Close</a></span>
         <div id="inner-light"></div>
     </div>
     <div id="fade" class="black_overlay"></div>
+
+    <div id="plannerDiv" class="white_content"><span class="closeButton"><a href = "javascript:void(0)" onclick = "document.getElementById('plannerDiv').style.display='none';document.getElementById('fade').style.display='none'">Close</a></span>
+        <div id="inner-light">
+            <form action="#">
+              <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                <input class="mdl-textfield__input" type="text" id="startSpot">
+                <label class="mdl-textfield__label" for="startSpot">Starting Point</label>
+              </div>
+            </form>
+            <p>to...</p>
+            <form action="#">
+              <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                <input class="mdl-textfield__input" type="text" id="destSpot">
+                <label class="mdl-textfield__label" for="destSpot">Destination</label>
+              </div>
+            </form>
+        </div>
+    </div>
+
     <!-- Always shows a header, even in smaller screens. -->
     <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
         <header class="mdl-layout__header">
@@ -36,10 +56,8 @@
                 <!-- Navigation. We hide it in small screens. -->
                 <nav class="mdl-navigation mdl-layout--large-screen-only">
                     <a class="mdl-navigation__link" href="javascript:void(0)" onClick="sortLocCode()">Sort List by Location Code</a>
-                    <!-- <a href="sortLocCode()">Sort</a> -->
-                    <!-- <a class="mdl-navigation__link" href="">Link</a>
-                    <a class="mdl-navigation__link" href="">Link</a>
-                    <a class="mdl-navigation__link" href="">Link</a> -->
+                    <!-- <a class="mdl-navigation__link" href="javascript:void(0)" onClick="tripPlanner()">Trip Planner...</a> -->
+                    <a class="mdl-navigation__link" href="javascript:void(0)" onClick="plannerStart()">Trip Planner...</a>
                 </nav>
             </div>
         </header>
@@ -73,10 +91,9 @@
             </div>
             <script src="./js/graphscript.js"></script>
             <script src="./js/mapscript.js"></script>
-    </div>
-    </main>
+            <script src="./js/planner.js"></script>
+        </main>
     </div>
     <!-- <script src="js/scripts.js"></script> -->
 </body>
-
 </html>

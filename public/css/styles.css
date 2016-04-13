@@ -8,6 +8,10 @@
 	
 }
 
+#plannerDiv {
+    float: left;
+}
+
 table {
     width: 30%;
 }

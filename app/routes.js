@@ -36,7 +36,7 @@ module.exports = function(app) {
 
 
 			//-------------------Quicksort
-			sortedData = sort.quickSort(resData)
+			sortedData = sort.quickSortNumber(resData)
 			console.log("Finished sorting in", Date.now() - checkpoint, "ms");
 			console.log("Checking for correctness...");
 			for (var i = 0; i < sortedData.length - 1; i++) {
@@ -127,6 +127,17 @@ module.exports = function(app) {
 			res.json(resPoint);
 		});
 		console.log('Request fulfilled');
+	})
+
+	app.get('/api/makeGraph', function(req, res) {
+		console.log("Asked to make graph");
+		fishPoint.find(function(err, resPoint) {
+			if (err) {
+				res.send(err);
+			}
+			graph = diGraph.createGraph(resPoint);
+			console.log(str(1), graph);
+		})
 	})
 
 	//frontend routes===========================================

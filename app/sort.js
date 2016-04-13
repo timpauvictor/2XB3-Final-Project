@@ -29,7 +29,7 @@ function partition(data, leftMost, rightMost) {
 }
 
 module.exports = {
-	quickSort: function(data, leftMost, rightMost) {
+	quickSortNumber: function(data, leftMost, rightMost) {
 		var index;
 
 		if ((data.length) > 1) {
@@ -39,14 +39,17 @@ module.exports = {
 			index = partition(data, leftMost, rightMost);
 
 			if (leftMost < index - 1) {
-				module.exports.quickSort(data, leftMost, index - 1);
+				module.exports.quickSortNumber(data, leftMost, index - 1);
 			}
 
 			if (index < rightMost) {
-				module.exports.quickSort(data, index, rightMost);
+				module.exports.quickSortNumber(data, index, rightMost);
 			}
 		}
 
 		return data;
+	},
+	quickSortString: function() {
+
 	}
 }

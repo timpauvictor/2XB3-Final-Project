@@ -136,7 +136,12 @@ module.exports = function(app) {
 				res.send(err);
 			}
 			graph = diGraph.createGraph(resPoint);
-			console.log(str(1), graph);
+			// console.log(graph);
+
+
+			// var json = require('json');
+			var fs = require('fs');
+			fs.writeFileSync('./data.json', JSON.stringify(graph) , 'utf-8');
 		})
 	})
 

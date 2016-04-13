@@ -20,10 +20,10 @@ module.exports = {
 			var node = {'name': points[i].locName,'lat':points[i].geometry.lat, 'lng': points[i].geometry.lng};
 			graph.nodes.push(node)
 		}
-		for (var i = 0; i < 100; i++) {			//for each point
+		for (var i = 0; i < points.length; i++) {			//for each point
 			console.log("working");
 			var adjlist = [];								//create an adjlist
-			for (var j = 0; j < 100; j++) {		//loop through all points
+			for (var j = 0; j < points.length; j++) {		//loop through all points
 				if(i !=j){									//don't create self loops
 					// console.log(points[i]);
 					// console.log(points[i].geometry.lat,points[i].geometry.lng,points[j].geometry.lat,points[j].geometry.lng);
@@ -36,7 +36,7 @@ module.exports = {
 			console.log(adjlist);
 			graph.edges.push(adjlist);						//add each node's adjlist to edges array in graph
 		}
-		console.log("graph", graph);
+		console.log(graph);
 		return graph;
 	}
 }

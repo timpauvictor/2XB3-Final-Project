@@ -143,9 +143,10 @@ module.exports = function(app) {
 
 	app.post('/api/getPath', function(req, res) {
 		console.log(req.body);
-		console.log("Looking for path from " + req.body.from);
+		console.log("Looking for path from " + req.body.from + "to " + req.body.to);
 		sp.DSP(graph, Number(req.body.from));
 		console.log(sp.pathTo(Number(req.body.to)));
+		res.send(sp.pathTo(Number(req.body.to)));
 	})
 
 	//frontend routes===========================================

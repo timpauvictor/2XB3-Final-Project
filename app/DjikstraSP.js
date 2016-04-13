@@ -23,13 +23,16 @@ module.exports = {
     },
 
     pathTo: function(v) {
-        console.log(v)
+        console.log(distTo);
+        // console.log("v", v)
         if (!hasPathTo(v)){
             return null;
         }
         var path = [];
         for (e = edgeTo[v]; e != null; e = edgeTo[e.from]) {
-            path.push(e);
+          console.log(e);
+          path.push(e);
+          console.log(path);
         }
         return path;
     }

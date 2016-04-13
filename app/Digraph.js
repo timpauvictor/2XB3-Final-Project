@@ -20,21 +20,23 @@ module.exports = {
 			var node = {'name': points[i].locName,'lat':points[i].geometry.lat, 'lng': points[i].geometry.lng};
 			graph.nodes.push(node)
 		}
-		for (var i = 0; i < points.length; i++) {			//for each point
+		for (var i = 0; i < 100; i++) {			//for each point
 			console.log("working");
 			var adjlist = [];								//create an adjlist
-			for (var j = 0; j < points.length; j++) {		//loop through all points
+			for (var j = 0; j < 100; j++) {		//loop through all points
 				if(i !=j){									//don't create self loops
-					var edgeweight = haverSine(points[i].lat,points[i].lng,points[j].lat,points[j].lng);
+					// console.log(points[i]);
+					// console.log(points[i].geometry.lat,points[i].geometry.lng,points[j].geometry.lat,points[j].geometry.lng);
+					var edgeweight = haverSine(points[i].geometry.lat,points[i].geometry.lng,points[j].geometry.lat,points[j].geometry.lng);
 					// console.log(edgeweight);
 					var edge = {'from': i,'to':j, 'weight':edgeweight};						//create an edge to the given node
 					adjlist.push(edge);
 				}
 			}
 			console.log(adjlist);
-			graph.edges.push(adjlist)						//add each node's adjlist to edges array in graph
+			graph.edges.push(adjlist);						//add each node's adjlist to edges array in graph
 		}
-		// console.log(graph);
+		console.log("graph", graph);
 		return graph;
 	}
 }
@@ -78,6 +80,7 @@ function toRad(Value) {
 }
 
 function haverSine(lat1,lon1,lat2,lon2){
+	console.log(lat1,lon1,lat2,lon2);
 	var R = 6371;
 	var x1 = lat2-lat1;
 	var dLat = toRad(x1);  

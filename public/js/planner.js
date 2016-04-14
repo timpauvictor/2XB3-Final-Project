@@ -36,7 +36,9 @@ function goPlannerClick() {
   }
 }
 
-$.ajax(settings).done(function (response) {
-  console.log(response);
-});
+	$.ajax(settings).done(function (response) {
+		x = document.getElementById('inner-light-planner')
+		console.log(x);
+  		console.log(response);
+	});
 }

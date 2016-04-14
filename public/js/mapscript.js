@@ -212,7 +212,6 @@ function displayWaterClusters() {
 }
 
 function sortLocCode() {
-	// console.log(listData);
 	var clonedArray = listData;
 	console.log("Requesting sorted list of data");
 	var jQueryPromise = $.get("http://localhost:8080/api/sortListData", {
@@ -227,10 +226,13 @@ function sortLocCode() {
 	});
 }
 
-loadMap();        // call load map
-getFishPoints();  // get our fish points and plot them
-getWaterPoints(); // get our water points and plot them
-displayFishClusters();
-displayWaterClusters();
+function main() {
+	loadMap();        // call load map
+	getFishPoints();  // get our fish points and plot them
+	getWaterPoints(); // get our water points and plot them
+	displayFishClusters();
+	displayWaterClusters();
+}
+
 
 

@@ -30,7 +30,7 @@ module.exports = {
 					// console.log(points[i].geometry.lat,points[i].geometry.lng,points[j].geometry.lat,points[j].geometry.lng);
 					var edgeweight = haverSine(points[i].geometry.lat,points[i].geometry.lng,points[j].geometry.lat,points[j].geometry.lng);
 					// console.log(edgeweight);
-					var edge = {'from': i,'to':j, 'weight':edgeweight};						//create an edge to the given node
+					var edge = {'fro': i, 'to':j, 'weight':edgeweight};						//create an edge to the given node
 					adjlist.push(edge);
 				}
 			}

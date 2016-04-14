@@ -1,10 +1,15 @@
 var distTo = [];
 var edgeTo = [];
+
 var pq = [];
 
 
 
+
 module.exports = {
+	distTo,
+	edgeTo,
+	pq,
     DSP: function(graph, s) {
         for (var v = 0; v < graph.nodes.length; v++){
             distTo[v] = Infinity;
@@ -14,21 +19,25 @@ module.exports = {
         pq[s] = distTo[s];
         
         while (pq.length>0) {
-                smallest =indexOfSmallest(pq);
+                var smallest = indexOfSmallest(pq);
                 var v = pq[smallest];
                 pq.splice(smallest,1);
-                for (e in graph.edges[v])
+                for (var i = 0; i<graph.edges[v].length;i++){
+					var e = graph.edges[v][i]
+					console.log("from" + e.fro + "to" + e.to)
                     relax(e);
+				}
             }
     },
 
     pathTo: function(v) {
-        console.log(v)
+        console.log(v);
         if (!hasPathTo(v)){
+			console.log("not found");
             return null;
         }
         var path = [];
-        for (e = edgeTo[v]; e != null; e = edgeTo[e.from]) {
+        for (e = edgeTo[v]; e != null; e = edgeTo[e.fro]) {
             path.push(e);
         }
         return path;
@@ -61,7 +70,8 @@ function indexOfSmallest(a) {
 // }
 
     function relax(e) {
-        var v = e.from, w = e.to;
+        var v = e.fro; 
+		var w = e.to;
         if (distTo[w] > distTo[v] + e.weight) {
             distTo[w] = distTo[v] + e.weight;
             edgeTo[w] = e;
